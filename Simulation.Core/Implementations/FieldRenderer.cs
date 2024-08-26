@@ -1,30 +1,42 @@
-﻿using Simulation.Core.Interfaces;
+﻿using Simulation.Core.AStarAlgorithm;
+using Simulation.Core.Interfaces;
 
 namespace Simulation.Core.Implementations;
-public class FieldRenderer() : IFieldRender
+public class FieldRenderer(int fieldWidth, int fieldHeight) : IFieldRender
 {
-    //private string[][] CreateEmptyField(int fieldWidth, int fieldHeight)
-    //{
-    //    var field = new string[fieldHeight][];
-    //    for (int i = 0; i < fieldHeight; i++)
-    //    {
-    //        field[i] = new string[fieldWidth]; 
-    //    }
-    //    return field;
-    //}
-    //private void PlaceEntities(string[][] field, Dictionary<Guid, Coordinates> entitiesCoordinates)
-    //{
-    //    foreach (var entity in entitiesCoordinates)
-    //    {
-    //        field[entity.Value.X][entity.Value.Y] = "x";
-    //    }
-    //}
-
-    public void RenderField()
+    private List<List<string>> CreateCleanField()
     {
-        foreach (var VARIABLE in COLLECTION)
+        var field = new List<List<string>>();
+        for (int i = 0; i < fieldHeight; i++)
         {
-            throw new NotImplementedException();
+            var row = new List<string>();
+            for (int j = 0; j < fieldWidth; j++)
+            {
+                row.Add("\ud83d\udfe9");
+            }
+            field.Add(row);
+        }
+        return field;
+    }
+
+    private List<List<string>> CreateFieldWithEntities(Dictionary<Node, string> coordinateDisplayMarks)
+    {
+        var field = CreateCleanField();
+
+        foreach (var item in coordinateDisplayMarks)
+        {
+            field[item.Key.X][item.Key.Y] = item.Value;
+        }
+        return field;
+    }
+
+    public void RenderField(Dictionary<Node, string> coordinateDisplayMarks)
+    {
+        var fieldWithEntities = CreateFieldWithEntities(coordinateDisplayMarks);
+
+        foreach (var innerList in fieldWithEntities)
+        {
+            Console.WriteLine(string.Join("", innerList));
         }
     }
 }

@@ -1,12 +1,14 @@
-﻿namespace Simulation.Core.Interfaces;
+﻿using Simulation.Core.AStarAlgorithm;
 
-public interface IMap<TKey, TValue>
+namespace Simulation.Core.Interfaces;
+
+public interface IMap
 {
-    TValue Get(TKey entityId);
+    Node GetEntityCoordinates(Guid id);
 
-    void Add(TKey entityId, TValue coordinates);
+    void AddEntityCoordinates(Guid id, Node nodes);
 
-    void Delete(TKey entityId);
+    void DeleteEntityCoordinates(Guid id);
 
-    void Edit(TKey entityId, TValue coordinates);
+    void UpdateEntityCoordinates(Guid id, Node nodes);
 }

@@ -1,5 +1,7 @@
-﻿namespace Simulation.Core.Interfaces;
+﻿using Simulation.Core.AStarAlgorithm;
+
+namespace Simulation.Core.Interfaces;
 public interface IFieldRender
 {
-    void RenderField();
+    public void RenderField(Dictionary<Node, string> coordinateDisplayMarks);
 }

@@ -1,24 +1,22 @@
-﻿using Simulation.Core.Interfaces;
-using Simulation.Core.POCO;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Simulation.Core.AStarAlgorithm;
+using Simulation.Core.Interfaces;
 
 namespace Simulation.Core.Implementations;
 
-public class Map : IMap<Guid, Coordinates>
+public class Map : IMap
 {
-    private readonly Dictionary<Guid, Coordinates> _entitiesLocation = [];
+    private readonly Dictionary<Guid, Node> _entitiesLocation = [];
 
-    public Coordinates Get(Guid entityId) =>
-         _entitiesLocation.First(x=>
+    public Node GetEntityCoordinates(Guid entityId) =>
+         _entitiesLocation.First(x =>
              x.Key.Equals(entityId)).Value;
 
-    public void Add(Guid entityId, Coordinates coordinates) =>
-        _entitiesLocation.Add(entityId, coordinates);
+    public void AddEntityCoordinates(Guid entityId, Node nodes) =>
+        _entitiesLocation.Add(entityId, nodes);
 
-    public void Delete(Guid entityId) =>
+    public void DeleteEntityCoordinates(Guid entityId) =>
         _entitiesLocation.Remove(entityId);
 
-    public void Edit(Guid entityId, Coordinates coordinates) =>
-        _entitiesLocation[entityId] = coordinates;
+    public void UpdateEntityCoordinates(Guid entityId, Node nodes) =>
+        _entitiesLocation[entityId] = nodes;
 }

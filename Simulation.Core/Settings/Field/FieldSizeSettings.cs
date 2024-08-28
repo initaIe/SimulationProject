@@ -1,4 +1,4 @@
-﻿namespace Simulation.Core.Settings;
+﻿namespace Simulation.Core.Settings.Field;
 
 public class FieldSizeSettings(int fieldWidth = 20, int fieldHeight = 35)
 {

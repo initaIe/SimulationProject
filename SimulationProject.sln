@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulation.ConsoleApp", "Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulation.Core", "Simulation.Core\Simulation.Core.csproj", "{9A075870-393B-470E-A9D2-0EE55C863A93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation.Astar", "Simulation.Astar\Simulation.Astar.csproj", "{27C60296-EC8B-4F17-8E3C-7F4CA276DF55}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{9A075870-393B-470E-A9D2-0EE55C863A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A075870-393B-470E-A9D2-0EE55C863A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A075870-393B-470E-A9D2-0EE55C863A93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27C60296-EC8B-4F17-8E3C-7F4CA276DF55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27C60296-EC8B-4F17-8E3C-7F4CA276DF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27C60296-EC8B-4F17-8E3C-7F4CA276DF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27C60296-EC8B-4F17-8E3C-7F4CA276DF55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

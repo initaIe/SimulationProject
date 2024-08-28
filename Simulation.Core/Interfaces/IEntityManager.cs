@@ -2,7 +2,7 @@
 
 namespace Simulation.Core.Interfaces;
 
-public interface IField
+public interface IEntityManager
 {
     IEntity GetEntity(Guid id);
     void DeleteEntity(Guid id);
@@ -10,5 +10,4 @@ public interface IField
     void UpdateEntity(Guid id, IEntity entity);
     int GetEntityCountByType(Type type);
     HashSet<IEntity> GetAll();
-
 }

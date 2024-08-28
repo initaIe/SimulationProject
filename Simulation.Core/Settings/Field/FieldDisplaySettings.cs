@@ -1,4 +1,4 @@
-﻿namespace Simulation.Core.Settings;
+﻿namespace Simulation.Core.Settings.Field;
 
 public class FieldDisplaySettings(string emptyCellDisplayMark = "\ud83d\udfe9")
 {

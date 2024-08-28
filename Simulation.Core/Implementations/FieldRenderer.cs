@@ -1,4 +1,5 @@
 ﻿using Simulation.Core.Interfaces;
+using Simulation.Core.POCO;
 using Simulation.Core.Settings;
 
 namespace Simulation.Core.Implementations;
@@ -27,7 +28,7 @@ public class FieldRenderer(FieldSettings fieldSettings) : IFieldRender
         RenderCleanField();
         foreach (var data in renderEntityData)
         {
-            Console.SetCursorPosition(data.Node.X*2, data.Node.Y);
+            Console.SetCursorPosition(data.Node.X * 2, data.Node.Y);
             Console.Write(data.DisplayMark);
         }
     }

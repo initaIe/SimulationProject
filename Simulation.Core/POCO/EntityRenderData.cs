@@ -1,4 +1,4 @@
-﻿namespace Simulation.Core.Implementations;
+﻿namespace Simulation.Core.POCO;
 
 public class EntityRenderData(string displayMark, Node node)
 {
@@ -7,6 +7,7 @@ public class EntityRenderData(string displayMark, Node node)
 
     public override bool Equals(object? obj)
     {
+        if (obj is null) throw new ArgumentException("Некорректное значение параметра");
         return obj is EntityRenderData renderEntityData &&
                DisplayMark == renderEntityData.DisplayMark &&
                Node.X == renderEntityData.Node.X &&

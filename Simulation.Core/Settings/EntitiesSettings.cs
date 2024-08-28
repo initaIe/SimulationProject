@@ -1,4 +1,6 @@
-﻿namespace Simulation.Core.Settings;
+﻿using Simulation.Core.Settings.Entity;
+
+namespace Simulation.Core.Settings;
 
 public class EntitiesSettings(
     EntitiesSpeedSettings speedSettings,

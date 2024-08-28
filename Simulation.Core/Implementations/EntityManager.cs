@@ -5,7 +5,7 @@ namespace Simulation.Core.Implementations;
 /// <summary>
 /// Класс отвечает за хранение объектов которые находятся на поле, операции с ними.
 /// </summary>
-public class Field : IField
+public class EntityManager : IEntityManager
 {
     private readonly HashSet<IEntity> _entities = [];
     public IEntity GetEntity(Guid id) => _entities.First(x => x.Id.Equals(id));

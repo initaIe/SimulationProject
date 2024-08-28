@@ -20,4 +20,9 @@ public class Map : IMap
 
     public void UpdateEntityCoordinates(Guid entityId, Node nodes) =>
         _entitiesLocation[entityId] = nodes;
+
+    public bool IsCellEmpty(Node node)
+    {
+        return !_entitiesLocation.ContainsValue(node);
+    }
 }

@@ -1,4 +1,4 @@
-﻿using Simulation.Core.Implementations;
+﻿using Simulation.Core.POCO;
 
 namespace Simulation.Core.Algorithm;
 
@@ -44,9 +44,9 @@ public class AstarPathfinder
                     Utility.IsInOpenList(neighbor, openList))
                     continue;
 
-                neighbor.SetDirectionCost(newNeighborDirectionCost);
-                neighbor.SetHeuristicCost(Utility.GetHeuristicCost(neighbor, final));
-                neighbor.SetParent(current);
+                neighbor.DirectionCost = newNeighborDirectionCost;
+                neighbor.HeuristicCost = Utility.GetHeuristicCost(neighbor, final);
+                neighbor.Parent = current;
                 openList.Add(neighbor);
             }
         }

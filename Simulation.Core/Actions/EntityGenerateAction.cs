@@ -1,6 +1,16 @@
-﻿namespace Simulation.Core.Actions;
+﻿using Simulation.Core.Interfaces;
+using Simulation.Core.Interfaces.EntityInterfaces;
+using Simulation.Core.Settings;
 
-public class EntityGenerateAction
+namespace Simulation.Core.Actions;
+
+public class EntityGenerateAction<T>(IMap map, SimulationSettings simulationSettings) : IAction where T : IEntity
 {
 
+    public void Perform()
+    {
+        var eSettings = simulationSettings.EntitiesSettings;
+
+        eSettings.
+    }
 }

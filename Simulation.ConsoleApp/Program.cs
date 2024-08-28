@@ -1,7 +1,4 @@
-﻿using Simulation.Astar;
-using Simulation.Core.Implementations;
-
-var pathFinder = new AstarPathfinder();
+﻿var pathFinder = new AstarPathfinder();
 
 var start = new Node(0, 0);
 var final = new Node(10, 10);
@@ -36,7 +33,7 @@ HashSet<Node> barriers =
     new Node(7, 10),
     new Node(9, 10),
 ];
-var result = pathFinder.FindPath(start, final, barriers, 11,11);
+var result = pathFinder.FindPath(start, final, barriers, 11, 11);
 
 foreach (var path in result)
 {

@@ -1,6 +1,6 @@
 ﻿using Simulation.Core.Implementations.EntityImplementations;
 
-namespace Simulation.Core.Settings;
+namespace Simulation.Core.Settings.Entity;
 
 public class EntitiesDisplaySettings(
     string foodDisplayMark = "🌿",

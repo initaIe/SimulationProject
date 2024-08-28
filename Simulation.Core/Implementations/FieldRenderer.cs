@@ -1,42 +1,34 @@
-﻿using Simulation.Core.AStarAlgorithm;
-using Simulation.Core.Interfaces;
+﻿using Simulation.Core.Interfaces;
+using Simulation.Core.Settings;
 
 namespace Simulation.Core.Implementations;
-public class FieldRenderer(int fieldWidth, int fieldHeight) : IFieldRender
+/// <summary>
+/// Класс отвечает за отрисовку поля в консоли.
+/// </summary>
+/// <param name="fieldSettings">Настройки поля (Ширина, высота).</param>
+public class FieldRenderer(FieldSettings fieldSettings) : IFieldRender
 {
-    private List<List<string>> CreateCleanField()
+    public void RenderCleanField()
     {
-        var field = new List<List<string>>();
-        for (int i = 0; i < fieldHeight; i++)
+        for (int i = 0; i < fieldSettings.FieldSizeSettings.FieldHeight; i++)
         {
-            var row = new List<string>();
-            for (int j = 0; j < fieldWidth; j++)
+            for (int j = 0; j < fieldSettings.FieldSizeSettings.FieldWidth; j++)
             {
-                row.Add("\ud83d\udfe9");
+                Console.Write(fieldSettings.FieldDisplaySettings.EmptyCellDisplayMark);
             }
-            field.Add(row);
+            Console.WriteLine();
         }
-        return field;
     }
 
-    private List<List<string>> CreateFieldWithEntities(Dictionary<Node, string> coordinateDisplayMarks)
+    // Эмодзи занимают 2 ед. по ширине, поэтому необходимо координату
+    // по Х умножать на 2 для корректного отображения
+    public void Render(HashSet<EntityRenderData> renderEntityData)
     {
-        var field = CreateCleanField();
-
-        foreach (var item in coordinateDisplayMarks)
+        RenderCleanField();
+        foreach (var data in renderEntityData)
         {
-            field[item.Key.X][item.Key.Y] = item.Value;
-        }
-        return field;
-    }
-
-    public void RenderField(Dictionary<Node, string> coordinateDisplayMarks)
-    {
-        var fieldWithEntities = CreateFieldWithEntities(coordinateDisplayMarks);
-
-        foreach (var innerList in fieldWithEntities)
-        {
-            Console.WriteLine(string.Join("", innerList));
+            Console.SetCursorPosition(data.Node.X*2, data.Node.Y);
+            Console.Write(data.DisplayMark);
         }
     }
 }

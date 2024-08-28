@@ -1,6 +1,6 @@
 ﻿using Simulation.Core.Implementations;
 
-namespace Simulation.Astar;
+namespace Simulation.Core.Algorithm;
 
 public class AstarPathfinder
 {

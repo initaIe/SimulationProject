@@ -1,8 +1,9 @@
-﻿using Simulation.Core.AStarAlgorithm;
-using Simulation.Core.Interfaces;
+﻿using Simulation.Core.Interfaces;
 
 namespace Simulation.Core.Implementations;
-
+/// <summary>
+/// Класс отвечает за расположение объектов, операции с ними.
+/// </summary>
 public class Map : IMap
 {
     private readonly Dictionary<Guid, Node> _entitiesLocation = [];

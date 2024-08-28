@@ -1,4 +1,4 @@
-﻿using Simulation.Core.AStarAlgorithm;
+﻿using Simulation.Core.Implementations;
 
 namespace Simulation.Core.Interfaces;
 

@@ -4,9 +4,11 @@ namespace Simulation.Core.Interfaces;
 
 public interface IField
 {
-    public IEntity GetEntity(Guid id);
-    public void DeleteEntity(Guid id);
-    public void AddEntity(IEntity entity);
-    public void UpdateEntity(Guid id, IEntity entity);
-    public int GetEntitiesCountByType(Type type);
+    IEntity GetEntity(Guid id);
+    void DeleteEntity(Guid id);
+    void AddEntity(IEntity entity);
+    void UpdateEntity(Guid id, IEntity entity);
+    int GetEntityCountByType(Type type);
+    HashSet<IEntity> GetAll();
+
 }

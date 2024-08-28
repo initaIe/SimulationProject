@@ -1,4 +1,6 @@
-﻿using Simulation.Core.Interfaces;
+﻿using Simulation.Core.Implementations;
+using Simulation.Core.Interfaces;
+using Simulation.Core.Settings;
 
 namespace Simulation.Core;
 public class Simulation
@@ -9,9 +11,13 @@ public class Simulation
     private readonly ITurnTracker _turnTracker;
     private readonly SimulationSettings _simulationSettings;
 
-    private Simulation
-        (IMap map, IField field, IFieldRender fieldRender,
-        ITurnTracker turnTracker, SimulationSettings simulationSettings)
+
+    public Simulation(
+        IMap map,
+        IField field,
+        IFieldRender fieldRender,
+        ITurnTracker turnTracker,
+        SimulationSettings simulationSettings)
     {
         _map = map;
         _field = field;
@@ -20,17 +26,22 @@ public class Simulation
         _simulationSettings = simulationSettings;
     }
 
-    public void NextTurn()
+    public HashSet<EntityRenderData> GetRenderEntityData()
     {
-
+        HashSet<EntityRenderData> data = [];
+        foreach (var entity in _field.GetAll())
+        {
+            var coordinate = _map.GetEntityCoordinates(entity.Id);
+            data.Add(new EntityRenderData(entity.DisplayMark, coordinate));
+        }
+        return data;
     }
+
 
     public void Start()
     {
-        
-    }
-    public void Pause()
-    {
 
+        var entityRenderData = GetRenderEntityData();
+        _fieldRender.Render(entityRenderData);
     }
 }

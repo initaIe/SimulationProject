@@ -4,10 +4,10 @@ namespace Simulation.Core.Interfaces;
 
 public interface IEntityManager
 {
-    IEntity GetEntity(Guid id);
-    void DeleteEntity(Guid id);
-    void AddEntity(IEntity entity);
-    void UpdateEntity(Guid id, IEntity entity);
-    int GetEntityCountByType(Type type);
+    IEntity Get(Guid id);
+    void Remove(Guid id);
+    void Add(IEntity entity);
     HashSet<IEntity> GetAll();
+    int GetCountByType<T>() where T : IEntity;
+    HashSet<IEntity> GetAllByType<T>() where T : IEntity;
 }

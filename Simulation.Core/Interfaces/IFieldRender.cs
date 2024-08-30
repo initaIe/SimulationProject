@@ -1,7 +1,9 @@
 ﻿using Simulation.Core.POCO;
 
-namespace Simulation.Core.Interfaces;
-public interface IFieldRender
+namespace Simulation.Core.Interfaces
 {
-    void Render(HashSet<EntityRenderData> renderEntityData);
+    public interface IFieldRender
+    {
+        void Render(HashSet<EntityRenderData> renderEntityData);
+    }
 }

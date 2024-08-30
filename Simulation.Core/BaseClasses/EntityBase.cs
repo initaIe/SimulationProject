@@ -13,6 +13,6 @@ public abstract class EntityBase(string displayMark) : IEntity
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Id);
+        return Id.GetHashCode();
     }
 }

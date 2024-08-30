@@ -4,7 +4,7 @@ using Simulation.Core.Settings;
 
 namespace Simulation.Core.Actions;
 
-public class EntityGenerateAction<T>(IMap map, SimulationSettings simulationSettings) : IAction where T : IEntity
+public class EntityGenerateAction<T>(IEntityLocationManager entityLocationManager, SimulationSettings simulationSettings) : IAction where T : IEntity
 {
 
     public void Perform()

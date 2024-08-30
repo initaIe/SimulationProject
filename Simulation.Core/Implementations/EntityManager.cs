@@ -1,22 +1,82 @@
-﻿using Simulation.Core.Interfaces;
+﻿using Simulation.Core.Implementations.EntityImplementations;
+using Simulation.Core.Interfaces;
 using Simulation.Core.Interfaces.EntityInterfaces;
 
 namespace Simulation.Core.Implementations;
-/// <summary>
-/// Класс отвечает за хранение объектов которые находятся на поле, операции с ними.
-/// </summary>
 public class EntityManager : IEntityManager
 {
-    private readonly HashSet<IEntity> _entities = [];
-    public IEntity GetEntity(Guid id) => _entities.First(x => x.Id.Equals(id));
-    public void DeleteEntity(Guid id) => _entities.RemoveWhere(x => x.Id.Equals(id));
-    public void AddEntity(IEntity entity) => _entities.Add(entity);
-    public void UpdateEntity(Guid id, IEntity entity)
+    private readonly IReadOnlyDictionary<Type, HashSet<IEntity>> _entities = new Dictionary<Type, HashSet<IEntity>>()
     {
-        DeleteEntity(id);
-        AddEntity(entity);
-    }
-    public int GetEntityCountByType(Type type) => _entities.Count(x => x.GetType() == type);
+        { typeof(StaticObject), [] },
+        { typeof(Herbivore), [] },
+        { typeof(Predator), [] },
+        { typeof(Food), []}
+    };
 
-    public HashSet<IEntity> GetAll() => _entities;
+    public void Add(IEntity entity)
+    {
+        if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+        var type = entity.GetType();
+        if (!_entities.TryGetValue(type, out var entitySet))
+        {
+            throw new ArgumentException($"Entity type {type} is not supported.");
+        }
+
+        entitySet.Add(entity);
+    }
+
+    public IEntity Get(Guid id) 
+    {
+        var entity = _entities.Values
+            .SelectMany(entitySet => entitySet
+            .Where(entity => entity.Id.Equals(id)))
+            .FirstOrDefault();
+
+        if (entity != null)
+        {
+            return entity;
+        }
+
+        throw new KeyNotFoundException($"Entity with ID {id} not found.");
+    }
+
+    public void Remove(Guid id)
+    {
+        foreach (var entitySet in _entities.Values)
+        {
+            var entityToRemove = entitySet.FirstOrDefault(entity => entity.Id.Equals(id));
+
+            if (entityToRemove == null) continue;
+
+            entitySet.Remove(entityToRemove);
+            return;
+        }
+        throw new KeyNotFoundException($"Entity with ID {id} not found.");
+    }
+
+    public int GetCountByType<T>() where T : IEntity
+    {
+        var type = typeof(T);
+        if (_entities.TryGetValue(type, out var entitySet))
+        {
+            return entitySet.Count;
+        }
+        throw new ArgumentException($"Entity type {type} is not supported.");
+    }
+
+    public HashSet<IEntity> GetAllByType<T>() where T : IEntity
+    {
+        var type = typeof(T);
+        if (_entities.TryGetValue(type, out var set))
+        {
+            return [..set]; 
+        }
+        throw new ArgumentException($"Entity type {type} is not supported.");
+    }
+
+    public HashSet<IEntity> GetAll()
+    {
+        return [.. _entities.SelectMany(entitySet => entitySet.Value)];
+    }
 }

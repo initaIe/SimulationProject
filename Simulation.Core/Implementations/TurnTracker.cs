@@ -6,6 +6,7 @@ namespace Simulation.Core.Implementations;
 /// </summary>
 public class TurnTracker : ITurnTracker
 {
-    public int TotalTurns { get; private set; }
-    public void NextTurn() => TotalTurns++;
+    private int _totalTurns;
+    public void NextTurn() => _totalTurns++;
+    public int GetTotalTurnsCount() => _totalTurns;
 }

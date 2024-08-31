@@ -17,7 +17,7 @@ public class Predator(string displayMark, int speed, int health, int damage)
     {
         //Может потратить ход на чтобы приблизиться к жертве или атаковать жертву
     }
-
+        
     public void Attack(IHerbivore preyHerbivore)
     {
         preyHerbivore.TakeDamage(Damage);

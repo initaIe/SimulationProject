@@ -6,7 +6,7 @@ namespace Simulation.Core.Implementations;
 /// <summary>
 /// Фасад который через свои методы делегирует выполнение работы компонентам и их методам.
 /// </summary>
-public class Field : IField
+public class Field : IField<Guid, Node, IEntity>
 {
     private readonly EntityManager _entityManager = new();
     private readonly EntityLocationManager _entityLocationManager = new();
@@ -24,12 +24,12 @@ public class Field : IField
         _entityLocationManager.Remove(id);
     }
 
-    public void Update(Guid id, IEntity entity, Node node)
+    public void Update(IEntity entity, Node node)
     {
-        _entityManager.Remove(id);
+        _entityManager.Remove(entity.Id);
         _entityManager.Add(entity);
 
-        _entityLocationManager.Remove(id);
+        _entityLocationManager.Remove(entity.Id);
         _entityLocationManager.Add(entity.Id, node);
     }
 
@@ -50,6 +50,11 @@ public class Field : IField
     public int GetCountOfEntitesByType<T>() where T : IEntity
     {
         return _entityManager.GetCountByType<T>();
+    }
+
+    public int GetTotalCountOfEntites()
+    {
+        return _entityManager.GetCountOfAll();
     }
 
     #endregion

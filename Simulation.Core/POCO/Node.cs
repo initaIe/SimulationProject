@@ -11,7 +11,6 @@ public class Node(int x, int y)
 
     public override bool Equals(object? obj)
     {
-        if (obj is null) throw new ArgumentException("Некорректное значение параметра");
         return obj is Node node && X == node.X && Y == node.Y;
     }
 

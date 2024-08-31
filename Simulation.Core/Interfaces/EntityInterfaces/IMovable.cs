@@ -1,13 +1,6 @@
 ﻿namespace Simulation.Core.Interfaces.EntityInterfaces;
 
-public interface IMovable : IMoveSpeed, IMoveAction;
-
-public interface IMoveSpeed
+public interface IMovable
 {
     int Speed { get; init; }
-}
-
-public interface IMoveAction
-{
-    void Move();
 }

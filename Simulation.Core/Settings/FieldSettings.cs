@@ -6,5 +6,4 @@ public class FieldSettings(FieldSizeSettings fieldSizeSettings, FieldDisplaySett
 {
     public FieldSizeSettings FieldSizeSettings { get; init; } = fieldSizeSettings;
     public FieldDisplaySettings FieldDisplaySettings { get; init; } = fieldDisplaySettings;
-    public int GetCountOfCells() => FieldSizeSettings.FieldHeight * FieldSizeSettings.FieldWidth;
 }

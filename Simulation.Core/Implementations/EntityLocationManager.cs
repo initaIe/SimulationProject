@@ -1,9 +1,8 @@
 ﻿using Simulation.Core.Interfaces;
-using Simulation.Core.Interfaces.EntityInterfaces;
 using Simulation.Core.POCO;
 
 namespace Simulation.Core.Implementations;
-public class EntityLocationManager : IEntityLocationManager
+public class EntityLocationManager : IEntityLocationManager<Guid, Node>
 {
     private readonly Dictionary<Guid, Node> _entitiesLocation = [];
 

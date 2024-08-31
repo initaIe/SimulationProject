@@ -2,12 +2,16 @@
 
 namespace Simulation.Core.Interfaces;
 
-public interface IEntityManager
+public interface IEntityManager<in TKey, TEntity>
+    where TKey : IEquatable<TKey>
+    where TEntity : IEntity
 {
-    IEntity Get(Guid id);
-    void Remove(Guid id);
-    void Add(IEntity entity);
-    HashSet<IEntity> GetAll();
+    TEntity Get(TKey key);
+    void Remove(TKey key);
+    void Add(TEntity entity);
+    HashSet<TEntity> GetAll();
+    public int GetCountOfAll();
+
     int GetCountByType<T>() where T : IEntity;
-    HashSet<IEntity> GetAllByType<T>() where T : IEntity;
+    HashSet<TEntity> GetAllByType<T>() where T : IEntity;
 }

@@ -1,11 +1,10 @@
-﻿using Simulation.Core.POCO;
+﻿namespace Simulation.Core.Interfaces;
 
-namespace Simulation.Core.Interfaces;
-
-public interface IEntityLocationManager
+public interface IEntityLocationManager<in TKey, TValue>
+    where TKey : IEquatable<TKey>
 {
-    public Node Get(Guid id);
-    public void Remove(Guid id);
-    public void Add(Guid id, Node node);
-    public bool IsLocationEmpty(Node node);
+    public TValue Get(TKey key);
+    public void Remove(TKey key);
+    public void Add(TKey id, TValue value);
+    public bool IsLocationEmpty(TValue value);
 }

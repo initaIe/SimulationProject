@@ -3,9 +3,10 @@ using Simulation.Core.Interfaces;
 using Simulation.Core.Interfaces.EntityInterfaces;
 
 namespace Simulation.Core.Implementations;
-public class EntityManager : IEntityManager
+public class EntityManager : IEntityManager<Guid,IEntity>
 {
-    private readonly IReadOnlyDictionary<Type, HashSet<IEntity>> _entities = new Dictionary<Type, HashSet<IEntity>>()
+    private readonly IReadOnlyDictionary<Type, HashSet<IEntity>> _entities =
+        new Dictionary<Type, HashSet<IEntity>>()
     {
         { typeof(StaticObject), [] },
         { typeof(Herbivore), [] },
@@ -54,7 +55,7 @@ public class EntityManager : IEntityManager
         }
         throw new KeyNotFoundException($"Entity with ID {id} not found.");
     }
-
+     
     public int GetCountByType<T>() where T : IEntity
     {
         var type = typeof(T);
@@ -63,6 +64,11 @@ public class EntityManager : IEntityManager
             return entitySet.Count;
         }
         throw new ArgumentException($"Entity type {type} is not supported.");
+    }
+
+    public int GetCountOfAll()
+    {
+        return _entities.Sum(entitySet => entitySet.Value.Count);
     }
 
     public HashSet<IEntity> GetAllByType<T>() where T : IEntity

@@ -1,18 +1,20 @@
-﻿using Simulation.Core.Implementations;
-using Simulation.Core.Interfaces.EntityInterfaces;
+﻿using Simulation.Core.Interfaces.EntityInterfaces;
 using Simulation.Core.POCO;
 
 namespace Simulation.Core.Interfaces;
 
-public interface IField
+public interface IField<in TKey, TValue, TEntity>
+    where TKey : IEquatable<TKey>
+    where TEntity : IEntity
 {
-    public void Remove(Guid id);
-    public Node GetEntityLocation(Guid id);
-    public HashSet<IEntity> GetAllEntities();
-    public void Add(IEntity entity, Node node);
-    public bool IsEntityLocationEmpty(Node node);
-    public void Update(Guid id, IEntity entity, Node node);
-    public int GetCountOfEntitesByType<T>() where T : IEntity;
-    public HashSet<IEntity> GetAllEntitesByType<T>() where T : IEntity;
+    void Add(TEntity entity, TValue value);
+    void Remove(TKey key);
+    void Update(TEntity entity, TValue value);
+    TValue GetEntityLocation(TKey key);
+    HashSet<TEntity> GetAllEntities();
+    bool IsEntityLocationEmpty(TValue value);
+    int GetTotalCountOfEntites();
+    int GetCountOfEntitesByType<T>() where T : IEntity;
+    HashSet<IEntity> GetAllEntitesByType<T>() where T : IEntity;
 }
 

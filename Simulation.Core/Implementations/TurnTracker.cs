@@ -8,5 +8,5 @@ public class TurnTracker : ITurnTracker
 {
     private int _totalTurns;
     public void NextTurn() => _totalTurns++;
-    public int GetTotalTurnsCount() => _totalTurns;
+    public int GetTotalTurns() => _totalTurns;
 }

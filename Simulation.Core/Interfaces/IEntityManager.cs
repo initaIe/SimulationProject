@@ -1,4 +1,4 @@
-﻿using Simulation.Core.Interfaces.EntityInterfaces;
+﻿using Simulation.Core.Entities.Interfaces;
 
 namespace Simulation.Core.Interfaces;
 

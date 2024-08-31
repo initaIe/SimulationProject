@@ -2,8 +2,8 @@
 
 namespace Simulation.Core.Settings;
 
-public class FieldSettings(FieldSizeSettings fieldSizeSettings, FieldDisplaySettings fieldDisplaySettings)
+public class FieldSettings(Size size, Display display)
 {
-    public FieldSizeSettings FieldSizeSettings { get; init; } = fieldSizeSettings;
-    public FieldDisplaySettings FieldDisplaySettings { get; init; } = fieldDisplaySettings;
+    public Size Size { get; init; } = size;
+    public Display Display { get; init; } = display;
 }

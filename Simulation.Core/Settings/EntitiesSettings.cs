@@ -3,17 +3,19 @@
 namespace Simulation.Core.Settings;
 
 public class EntitiesSettings(
-    EntitiesSpeedSettings speedSettings,
-    EntitiesDamageSettings damageSetting,
-    EntitiesHealthSettings healthSetting,
-    EntitiesSatietySettings satietySetting,
-    EntitiesDisplaySettings displaySettings,
-    EntitiesPercentAreaSettings percentAreaSettings)
+    Speed speed,
+    Damage damage,
+    Health health,
+    Satiety satiety,
+    Display display,
+    PercentArea percentArea,
+    Target target)
 {
-    public EntitiesSpeedSettings SpeedSettings { get; init; } = speedSettings;
-    public EntitiesDamageSettings DamageSetting { get; init; } = damageSetting;
-    public EntitiesHealthSettings HealthSetting { get; init; } = healthSetting;
-    public EntitiesSatietySettings SatietySetting { get; init; } = satietySetting;
-    public EntitiesDisplaySettings DisplaySettings { get; init; } = displaySettings;
-    public EntitiesPercentAreaSettings PercentAreaSettings { get; init; } = percentAreaSettings;
+    public Speed Speed { get; init; } = speed;
+    public Damage Damage { get; init; } = damage;
+    public Health Health { get; init; } = health;
+    public Satiety Satiety { get; init; } = satiety;
+    public Display Display { get; init; } = display;
+    public PercentArea PercentArea { get; init; } = percentArea;
+    public Target Target { get; init; } = target;
 }

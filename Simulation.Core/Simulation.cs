@@ -1,12 +1,12 @@
-﻿using Simulation.Core.Implementations.EntityImplementations;
+﻿using Simulation.Core.Entities;
+using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
-using Simulation.Core.Interfaces.EntityInterfaces;
-using Simulation.Core.POCO;
 using Simulation.Core.Settings;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
+using Simulation.Core.POCOs;
 
 namespace Simulation.Core;
 public class Simulation
@@ -66,7 +66,7 @@ public class Simulation
     {
         Random rnd = new();
 
-        var fieldSizeSettings = _simulationSettings.FieldSettings.FieldSizeSettings;
+        var fieldSizeSettings = _simulationSettings.FieldSettings.Size;
         int x = rnd.Next(0, fieldSizeSettings.FieldWidth - 1);
         int y = rnd.Next(0, fieldSizeSettings.FieldHeight - 1);
 
@@ -82,7 +82,7 @@ public class Simulation
 
     public int GetTotalCellsCount()
     {
-        var fieldSizeSettings = _simulationSettings.FieldSettings.FieldSizeSettings;
+        var fieldSizeSettings = _simulationSettings.FieldSettings.Size;
         return fieldSizeSettings.FieldHeight * fieldSizeSettings.FieldWidth;
     }
 
@@ -94,7 +94,7 @@ public class Simulation
         }
     }
 
-    private double CalculateDistance(Node start, Node final)
+    public double CalculateDistance(Node start, Node final)
     {
         return Math.Sqrt(Math.Pow(final.X - start.X, 2) + Math.Pow(final.Y - start.Y, 2));
     }
@@ -125,29 +125,24 @@ public class Simulation
         return targetEntity;
     }
 
-    public IEntity GetHerbivoreClosestTarget(IHerbivore herbivore)
+    public IEntity GetCreatureClosestTarget(ICreature creature)
     {
-        var herbivoreAsEntity = (IEntity)herbivore; 
-        var herbivoreLocation = _field.GetEntityLocation(herbivoreAsEntity.Id);
+        var entityLocation = new Node();
 
-        var entities = _field.GetAllEntities();
-
-        double minDistance = double.MaxValue;
-
-        IEntity targetEntity = null!;
-
-        foreach (var entity in entities)
+        if (creature is IEntity entity)
         {
-            if (entity is not Food) continue;
-
-            var entityLocation = _field.GetEntityLocation(entity.Id);
-            double distance = CalculateDistance(herbivoreLocation, entityLocation);
-
-            if (!(distance < minDistance)) continue;
-
-            minDistance = distance;
-            targetEntity = entity;
+            entityLocation = _field.GetEntityLocation(entity.Id);
         }
-        return targetEntity;
+
+        var targets = _simulationSettings.EntitiesSettings.Target.EntitiesTargets
+                                    .SelectMany(x => x.Value);
+
+        HashSet<IEntity> entities = [];
+
+        foreach (var target in targets)
+        {
+            var zxc = _field.GetAllEntitesByType<Herbivore>();
+            entities.UnionWith();
+        }
     }
 }

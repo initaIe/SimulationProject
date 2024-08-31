@@ -1,6 +1,6 @@
-﻿using Simulation.Core.Implementations.EntityImplementations;
+﻿using Simulation.Core.Entities;
+using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
-using Simulation.Core.Interfaces.EntityInterfaces;
 
 namespace Simulation.Core.Implementations;
 public class EntityManager : IEntityManager<Guid,IEntity>

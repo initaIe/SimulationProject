@@ -1,6 +1,6 @@
-﻿using Simulation.Core.Interfaces;
-using Simulation.Core.Interfaces.EntityInterfaces;
-using Simulation.Core.POCO;
+﻿using Simulation.Core.Entities.Interfaces;
+using Simulation.Core.Interfaces;
+using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 
 namespace Simulation.Core.Actions;

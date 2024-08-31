@@ -1,6 +1,6 @@
-﻿using Simulation.Core.Interfaces;
-using Simulation.Core.Interfaces.EntityInterfaces;
-using Simulation.Core.POCO;
+﻿using Simulation.Core.Entities.Interfaces;
+using Simulation.Core.Interfaces;
+using Simulation.Core.POCOs;
 
 namespace Simulation.Core.Implementations;
 /// <summary>
@@ -70,5 +70,6 @@ public class Field : IField<Guid, Node, IEntity>
     {
         return _entityLocationManager.IsLocationEmpty(node);
     }
+
     #endregion
 }

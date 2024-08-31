@@ -1,5 +1,5 @@
 ﻿using Simulation.Core.Interfaces;
-using Simulation.Core.POCO;
+using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 
 namespace Simulation.Core.Implementations;
@@ -11,11 +11,11 @@ public class FieldRenderer(FieldSettings fieldSettings) : IFieldRender
 {
     public void RenderCleanField()
     {
-        for (int i = 0; i < fieldSettings.FieldSizeSettings.FieldHeight; i++)
+        for (int i = 0; i < fieldSettings.Size.FieldHeight; i++)
         {
-            for (int j = 0; j < fieldSettings.FieldSizeSettings.FieldWidth; j++)
+            for (int j = 0; j < fieldSettings.Size.FieldWidth; j++)
             {
-                Console.Write(fieldSettings.FieldDisplaySettings.EmptyCellDisplayMark);
+                Console.Write(fieldSettings.Display.EmptyCellDisplayMark);
             }
             Console.WriteLine();
         }

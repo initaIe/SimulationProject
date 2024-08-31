@@ -1,5 +1,5 @@
 ﻿using Simulation.Core.Interfaces;
-using Simulation.Core.POCO;
+using Simulation.Core.POCOs;
 
 namespace Simulation.Core.Implementations;
 public class EntityLocationManager : IEntityLocationManager<Guid, Node>

@@ -1,4 +1,4 @@
-﻿using Simulation.Core.POCO;
+﻿using Simulation.Core.POCOs;
 
 namespace Simulation.Core.Interfaces
 {

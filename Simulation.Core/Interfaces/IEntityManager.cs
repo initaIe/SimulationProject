@@ -12,6 +12,6 @@ public interface IEntityManager<in TKey, TEntity>
     HashSet<TEntity> GetAll();
     public int GetCountOfAll();
 
-    int GetCountByType<T>() where T : IEntity;
-    HashSet<TEntity> GetAllByType<T>() where T : IEntity;
+    int GetCountByType(Type type);
+    HashSet<TEntity> GetAllByType(Type type);
 }

@@ -9,7 +9,7 @@ public class EntitiesSettings(
     Satiety satiety,
     Display display,
     PercentArea percentArea,
-    Target target)
+    Prey prey)
 {
     public Speed Speed { get; init; } = speed;
     public Damage Damage { get; init; } = damage;
@@ -17,5 +17,5 @@ public class EntitiesSettings(
     public Satiety Satiety { get; init; } = satiety;
     public Display Display { get; init; } = display;
     public PercentArea PercentArea { get; init; } = percentArea;
-    public Target Target { get; init; } = target;
+    public Prey Prey { get; init; } = prey;
 }

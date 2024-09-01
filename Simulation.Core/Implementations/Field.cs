@@ -42,14 +42,14 @@ public class Field : IField<Guid, Node, IEntity>
         return _entityManager.GetAll();
     }
 
-    public HashSet<IEntity> GetAllEntitesByType<T>() where T : IEntity
+    public HashSet<IEntity> GetAllEntitesByType(Type type)
     {
-        return _entityManager.GetAllByType<T>();
+        return _entityManager.GetAllByType(type);
     }
 
-    public int GetCountOfEntitesByType<T>() where T : IEntity
+    public int GetCountOfEntitesByType(Type type)
     {
-        return _entityManager.GetCountByType<T>();
+        return _entityManager.GetCountByType(type);
     }
 
     public int GetTotalCountOfEntites()

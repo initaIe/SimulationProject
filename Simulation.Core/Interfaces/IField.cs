@@ -13,7 +13,7 @@ public interface IField<in TKey, TValue, TEntity>
     HashSet<TEntity> GetAllEntities();
     bool IsEntityLocationEmpty(TValue value);
     int GetTotalCountOfEntites();
-    int GetCountOfEntitesByType<T>() where T : IEntity;
-    HashSet<IEntity> GetAllEntitesByType<T>() where T : IEntity;
+    int GetCountOfEntitesByType(Type type);
+    HashSet<IEntity> GetAllEntitesByType(Type type);
 }
 

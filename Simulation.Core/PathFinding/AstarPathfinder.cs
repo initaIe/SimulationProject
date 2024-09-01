@@ -2,9 +2,9 @@
 
 namespace Simulation.Core.PathFinding;
 
-public class AstarPathfinder
+public static class AstarPathfinder
 {
-    public List<Node> FindPath(Node start, Node final, HashSet<Node> barriers, int fieldWidth, int fieldHeight)
+    public static List<Node> FindPath(Node start, Node final, HashSet<Node> barriers, int fieldWidth, int fieldHeight)
     {
         ArgumentNullException.ThrowIfNull(start, nameof(start));
         ArgumentNullException.ThrowIfNull(final, nameof(final));

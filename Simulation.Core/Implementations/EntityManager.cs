@@ -3,7 +3,7 @@ using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
 
 namespace Simulation.Core.Implementations;
-public class EntityManager : IEntityManager<Guid,IEntity>
+public class EntityManager : IEntityManager<Guid, IEntity>
 {
     private readonly IReadOnlyDictionary<Type, HashSet<IEntity>> _entities =
         new Dictionary<Type, HashSet<IEntity>>()
@@ -27,7 +27,7 @@ public class EntityManager : IEntityManager<Guid,IEntity>
         entitySet.Add(entity);
     }
 
-    public IEntity Get(Guid id) 
+    public IEntity Get(Guid id)
     {
         var entity = _entities.Values
             .SelectMany(entitySet => entitySet
@@ -55,10 +55,9 @@ public class EntityManager : IEntityManager<Guid,IEntity>
         }
         throw new KeyNotFoundException($"Entity with ID {id} not found.");
     }
-     
-    public int GetCountByType<T>() where T : IEntity
+
+    public int GetCountByType(Type type)
     {
-        var type = typeof(T);
         if (_entities.TryGetValue(type, out var entitySet))
         {
             return entitySet.Count;
@@ -71,12 +70,11 @@ public class EntityManager : IEntityManager<Guid,IEntity>
         return _entities.Sum(entitySet => entitySet.Value.Count);
     }
 
-    public HashSet<IEntity> GetAllByType<T>() where T : IEntity
+    public HashSet<IEntity> GetAllByType(Type type)
     {
-        var type = typeof(T);
         if (_entities.TryGetValue(type, out var set))
         {
-            return [..set]; 
+            return [.. set];
         }
         throw new ArgumentException($"Entity type {type} is not supported.");
     }

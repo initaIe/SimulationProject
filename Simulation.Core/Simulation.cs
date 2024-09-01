@@ -1,33 +1,24 @@
-﻿using Simulation.Core.Entities;
+﻿using System.Collections;
+using Simulation.Core.Entities;
 using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
+using Simulation.Core.PathFinding;
+using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using Simulation.Core.POCOs;
 
 namespace Simulation.Core;
-public class Simulation
+public class Simulation(
+    IFieldRender fieldRender,
+    ITurnTracker turnTracker,
+    SimulationSettings simulationSettings,
+    IField<Guid, Node, IEntity> field)
 {
-    private readonly IField<Guid, Node, IEntity> _field;
-    private readonly IFieldRender _fieldRender;
-    private readonly ITurnTracker _turnTracker;
-    private readonly SimulationSettings _simulationSettings;
+    private readonly IField<Guid, Node, IEntity> _field = field;
+    private readonly IFieldRender _fieldRender = fieldRender;
+    private readonly ITurnTracker _turnTracker = turnTracker;
+    private readonly SimulationSettings _simulationSettings = simulationSettings;
 
-
-    public Simulation(
-        IFieldRender fieldRender,
-        ITurnTracker turnTracker,
-        SimulationSettings simulationSettings,
-        IField<Guid, Node, IEntity> field)
-    {
-        _fieldRender = fieldRender;
-        _turnTracker = turnTracker;
-        _simulationSettings = simulationSettings;
-        _field = field;
-    }
 
     public HashSet<EntityRenderData> GetRenderEntityData()
     {
@@ -94,55 +85,59 @@ public class Simulation
         }
     }
 
-    public double CalculateDistance(Node start, Node final)
+    public IEntity? GetClosestPrey(ICreature creature)
     {
-        return Math.Sqrt(Math.Pow(final.X - start.X, 2) + Math.Pow(final.Y - start.Y, 2));
+        if (creature is not IEntity entity) return null;
+
+        var creatureLocation = _field.GetEntityLocation(entity.Id);
+        var barriers = GetBarriers();
+        int minTotalCost = int.MaxValue;
+        IEntity? closestPrey = null;
+
+        foreach (var prey in GetPreyEntites(creature))
+        {
+            var entityLocation = _field.GetEntityLocation(prey.Id);
+            var fieldSizeSettings = _simulationSettings.FieldSettings.Size;
+
+            var path = AstarPathfinder.FindPath(
+                creatureLocation,
+                entityLocation,
+                barriers,
+                fieldSizeSettings.FieldWidth,
+                fieldSizeSettings.FieldHeight);
+
+            if (!path.Any()) continue;
+
+            int totalCost = path[^1].TotalCost;
+
+            if (totalCost < minTotalCost)
+            {
+                minTotalCost = totalCost;
+                closestPrey = prey;
+            }
+        }
+        return closestPrey;
     }
 
-    public IEntity GetPredatorClosestTarget(IPredator predator)
+    public HashSet<Type>? GetPreyTypes(ICreature creature)
     {
-        var predatorAsEntity = (IEntity)predator;
-        var predatorLocation = _field.GetEntityLocation(predatorAsEntity.Id);
-
-        var entities = _field.GetAllEntities();
-
-        double minDistance = double.MaxValue;
-
-        IEntity targetEntity = null!;
-
-        foreach (var entity in entities)
-        {
-            if (entity is not Food or Herbivore) continue;
-
-            var entityLocation = _field.GetEntityLocation(entity.Id);
-            double distance = CalculateDistance(predatorLocation, entityLocation);
-
-            if (!(distance < minDistance)) continue;
-
-            minDistance = distance;
-            targetEntity = entity;
-        }
-        return targetEntity;
+        var preySettings = _simulationSettings.EntitiesSettings.Prey;
+        preySettings.PreyEntities.TryGetValue(creature.GetType(), out var types);
+        return types;
     }
 
-    public IEntity GetCreatureClosestTarget(ICreature creature)
+    public HashSet<IEntity> GetPreyEntites(ICreature creature)
     {
-        var entityLocation = new Node();
-
-        if (creature is IEntity entity)
-        {
-            entityLocation = _field.GetEntityLocation(entity.Id);
-        }
-
-        var targets = _simulationSettings.EntitiesSettings.Target.EntitiesTargets
-                                    .SelectMany(x => x.Value);
-
-        HashSet<IEntity> entities = [];
-
-        foreach (var target in targets)
-        {
-            var zxc = _field.GetAllEntitesByType<Herbivore>();
-            entities.UnionWith();
-        }
+        return GetPreyTypes(creature)?
+            .SelectMany(type => _field.GetAllEntitesByType(type))
+            .ToHashSet() ?? [];
     }
+
+    public HashSet<Node> GetBarriers()
+    {
+        return _field.GetAllEntitesByType(typeof(StaticObject))
+            .Select(staticObject => _field.GetEntityLocation(staticObject.Id))
+            .ToHashSet();
+    }
+    Hashtable   
 }

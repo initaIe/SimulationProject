@@ -1,7 +1,7 @@
 ﻿namespace Simulation.Core.POCOs;
 
 public class Node
-{
+{ 
     public Node(){}
 
     public Node(int x, int y)

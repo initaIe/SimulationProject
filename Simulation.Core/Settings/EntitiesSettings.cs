@@ -1,21 +1,30 @@
-﻿using Simulation.Core.Settings.Entity;
+﻿using System.Collections.ObjectModel;
+using Simulation.Core.Entities;
+using Simulation.Core.Settings.Entity.Implementations;
+using Simulation.Core.Settings.Entity.Interfaces;
 
 namespace Simulation.Core.Settings;
 
 public class EntitiesSettings(
-    Speed speed,
-    Damage damage,
-    Health health,
-    Satiety satiety,
-    Display display,
-    PercentArea percentArea,
-    Prey prey)
+    StaticObjectSettings staticObjectSettings,
+    FoodSettings foodSettings,
+    HerbivoreSettings herbivoreSettings,
+    PredatorSettings predatorSettings)
 {
-    public Speed Speed { get; init; } = speed;
-    public Damage Damage { get; init; } = damage;
-    public Health Health { get; init; } = health;
-    public Satiety Satiety { get; init; } = satiety;
-    public Display Display { get; init; } = display;
-    public PercentArea PercentArea { get; init; } = percentArea;
-    public Prey Prey { get; init; } = prey;
+    private readonly Dictionary<Type, IEntitySettings> _entitySettings = new()
+    {
+        { typeof(StaticObject), staticObjectSettings },
+        { typeof(Food), foodSettings },
+        { typeof(Herbivore), herbivoreSettings },
+        { typeof(Predator), predatorSettings }
+    };
+
+    public IEntitySettings GetEntitySettingsByType(Type type)
+    {
+        if (_entitySettings.TryGetValue(type, out var settings))
+        {
+            return settings;
+        }
+        throw new ArgumentException($"Settings for type {type.Name} not found.");
+    }
 }

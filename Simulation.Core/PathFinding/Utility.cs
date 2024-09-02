@@ -1,5 +1,4 @@
-﻿using Simulation.Core.Algorithm;
-using Simulation.Core.POCOs;
+﻿using Simulation.Core.POCOs;
 
 namespace Simulation.Core.PathFinding;
 

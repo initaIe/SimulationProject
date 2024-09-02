@@ -1,4 +1,4 @@
-﻿namespace Simulation.Core.Algorithm;
+﻿namespace Simulation.Core.PathFinding;
 
 internal enum MovementCost
 {

@@ -1,13 +1,22 @@
-﻿using Simulation.Core.Entities.Interfaces;
-using Simulation.Core.Interfaces;
-using Simulation.Core.POCOs;
+﻿using Simulation.Core.Interfaces;
 using Simulation.Core.Settings;
 
 namespace Simulation.Core.Actions;
 
-public class EntityGenerateAction<T>(IEntityLocationManager<Guid, Node> entityLocationManager, SimulationSettings simulationSettings) : IAction where T : IEntity
+public class EntityGenerateAction(SimulationSettings settings, IMap map)
 {
     public void Perform()
     {
+    }
+    //todo
+    public void GenerateEntity(Type type)
+    {
+        var rnd = new Random();
+
+        var entitySettings = settings.Entities.GetEntitySettingsByType(type);
+
+        var entity = Activator.CreateInstance(type);
+
+        entity
     }
 }

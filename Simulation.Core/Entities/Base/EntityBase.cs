@@ -11,8 +11,5 @@ public abstract class EntityBase(string displayMark) : IEntity
         return obj is IEntity entity && Id == entity.Id;
     }
 
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
-    }
+    public override int GetHashCode() => Id.GetHashCode();
 }

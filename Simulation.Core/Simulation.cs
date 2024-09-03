@@ -31,38 +31,7 @@ public class Simulation(
         return data;
     }
 
-    public bool TryGetRandomEmptyLocation([MaybeNullWhen(false)] out Node node)
-    {
-        if (!HasFieldEmptyLocation())
-        {
-            node = null;
-            return false;
-        }
-
-        Node rndLocation;
-        do
-        {
-            rndLocation = GetRandomLocation();
-        } while (!_map.IsLocationEmpty(rndLocation));
-
-        node = rndLocation;
-        return true;
-    }
-
-    public Node GetRandomLocation()
-    {
-        Random rnd = new();
-
-        int x = rnd.Next(0, _simulationSettings.GetFieldWidth() - 1);
-        int y = rnd.Next(0, _simulationSettings.GetFieldHeight() - 1);
-
-        return new Node(x, y);
-    }
-
-    public bool HasFieldEmptyLocation()
-    {
-        return _map.GetCount() < _simulationSettings.GetCellsCount();
-    }
+    
 
     public void MoveCreature(ICreature creature, Node final)
     {

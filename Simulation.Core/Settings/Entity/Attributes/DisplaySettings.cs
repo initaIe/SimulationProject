@@ -1,6 +1,6 @@
 ﻿namespace Simulation.Core.Settings.Entity.Attributes;
 
-public class DisplaySettings(string displayMark)
+public class DisplaySettings(List<string> displayMarks)
 {
-    public string DisplayMark { get; set; } = displayMark;
+    public List<string> DisplayMarks { get; set; } = displayMarks;
 }

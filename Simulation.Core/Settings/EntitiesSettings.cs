@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Simulation.Core.Entities;
+﻿using Simulation.Core.Entities;
 using Simulation.Core.Settings.Entity.Implementations;
 using Simulation.Core.Settings.Entity.Interfaces;
 

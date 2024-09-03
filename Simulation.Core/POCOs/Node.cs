@@ -1,8 +1,8 @@
 ﻿namespace Simulation.Core.POCOs;
 
 public class Node
-{ 
-    public Node(){}
+{
+    public Node() { }
 
     public Node(int x, int y)
     {
@@ -10,7 +10,7 @@ public class Node
         Y = y;
     }
     public int X { get; }
-    public int Y { get; } 
+    public int Y { get; }
     public int DirectionCost { get; set; }
     public int HeuristicCost { get; set; }
     public int TotalCost => DirectionCost + HeuristicCost;

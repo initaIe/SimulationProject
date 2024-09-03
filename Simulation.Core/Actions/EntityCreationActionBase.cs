@@ -2,6 +2,7 @@
 using Simulation.Core.Interfaces;
 using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
+using Simulation.Core.Settings.Entity.Interfaces;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Simulation.Core.Actions;
@@ -13,6 +14,8 @@ public abstract class EntityCreationActionBase : IAction
     public abstract void Perform(IMap map, SimulationSettings simulationSettings);
 
     public abstract IEntity CreateEntity(IMap map, SimulationSettings simulationSettings);
+
+    public abstract void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity);
 
     public bool TryGetRandomEmptyLocation(IMap map, SimulationSettings simulationSettings, [MaybeNullWhen(false)] out Node node)
     {
@@ -61,5 +64,17 @@ public abstract class EntityCreationActionBase : IAction
         int minCount = totalFieldCells * minPercentArea / baseNumber;
         int maxCount = totalFieldCells * maxPercentArea / baseNumber;
         return (minCount, maxCount);
+    }
+
+    public int GetRandomQuantityInRange(Type type, IMap map, SimulationSettings simulationSettings)
+    {
+        var rangeQuantity = GetEntityQuantityRange(type, map, simulationSettings);
+
+        return Rnd.Next(rangeQuantity.min, rangeQuantity.max);
+    }
+
+    public IEntitySettings GetEntitySettings(Type type, SimulationSettings simulationSettings)
+    {
+        return simulationSettings.Entities.GetEntitySettingsByType(type);
     }
 }

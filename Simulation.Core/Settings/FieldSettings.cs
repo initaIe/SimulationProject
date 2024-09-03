@@ -2,12 +2,12 @@
 
 namespace Simulation.Core.Settings;
 
-public class FieldSettings(SizeSettings size, DisplaySettings display)
+public class FieldSettings(SizeSettings sizeSettings, DisplaySettings displaySettings)
 {
-    public SizeSettings Size { get; init; } = size;
-    public DisplaySettings Display { get; init; } = display;
-    public int GetFieldWidth() => Size.FieldWidth;
-    public int GetFieldHeight() => Size.FieldHeight;
+    public SizeSettings SizeSettings { get; init; } = sizeSettings;
+    public DisplaySettings DisplaySettings { get; init; } = displaySettings;
+    public int GetFieldWidth() => SizeSettings.FieldWidth;
+    public int GetFieldHeight() => SizeSettings.FieldHeight;
     public int GetCellsCount() => GetFieldHeight() * GetFieldWidth();
-    public string GetEmptyCellDisplayMark() => Display.EmptyCellDisplayMark;
+    public string GetEmptyCellDisplayMark() => DisplaySettings.EmptyCellDisplayMark;
 }

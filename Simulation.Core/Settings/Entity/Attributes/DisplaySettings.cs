@@ -1,6 +1,6 @@
 ﻿namespace Simulation.Core.Settings.Entity.Attributes;
 
-public class DisplaySettings(List<string> displayMarks)
+public class DisplaySettings(HashSet<string> displayMarks)
 {
-    public List<string> DisplayMarks { get; set; } = displayMarks;
+    public HashSet<string> DisplayMarks { get; set; } = displayMarks;
 }

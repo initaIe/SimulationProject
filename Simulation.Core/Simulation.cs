@@ -4,7 +4,6 @@ using Simulation.Core.Interfaces;
 using Simulation.Core.PathFinding;
 using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Simulation.Core;
 public class Simulation(
@@ -31,7 +30,7 @@ public class Simulation(
         return data;
     }
 
-    
+
 
     public void MoveCreature(ICreature creature, Node final)
     {
@@ -48,7 +47,7 @@ public class Simulation(
         foreach (var prey in GetPreyEntites(creature))
         {
             var preyLocation = _map.GetEntityLocation(prey);
-            var fieldSizeSettings = _simulationSettings.Field.Size;
+            var fieldSizeSettings = _simulationSettings.Field.SizeSettings;
 
             var path = AstarPathfinder.FindPath(
                 creatureLocation,

@@ -80,7 +80,7 @@ public class Map : IMap
     public HashSet<IEntity> GetEntitesByType(Type type)
     {
         return
-        [ 
+        [
             .. _entities.Values.Where(x => x.GetType() == type)
         ];
     }

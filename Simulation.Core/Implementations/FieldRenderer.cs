@@ -11,11 +11,11 @@ public class FieldRenderer(FieldSettings fieldSettings) : IFieldRender
 {
     public void RenderCleanField()
     {
-        for (int i = 0; i < fieldSettings.Size.FieldHeight; i++)
+        for (int i = 0; i < fieldSettings.SizeSettings.FieldHeight; i++)
         {
-            for (int j = 0; j < fieldSettings.Size.FieldWidth; j++)
+            for (int j = 0; j < fieldSettings.SizeSettings.FieldWidth; j++)
             {
-                Console.Write(fieldSettings.Display.EmptyCellDisplayMark);
+                Console.Write(fieldSettings.DisplaySettings.EmptyCellDisplayMark);
             }
             Console.WriteLine();
         }

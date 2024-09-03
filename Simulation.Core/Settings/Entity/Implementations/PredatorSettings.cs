@@ -3,18 +3,18 @@ using Simulation.Core.Settings.Entity.Interfaces;
 
 namespace Simulation.Core.Settings.Entity.Implementations;
 public class PredatorSettings(
-    PercentAreaSettings percentArea,
+    RangeSettings percentArea,
     DisplaySettings displayMark,
-    HealthSettings health,
-    SpeedSettings speed,
+    RangeSettings health,
+    RangeSettings speed,
     PreySettings preys,
-    DamageSettings damage)
+    RangeSettings damage)
     : IPredatorSettings
 {
-    public PercentAreaSettings PercentArea { get; } = percentArea;
+    public RangeSettings PercentArea { get; } = percentArea;
     public DisplaySettings DisplayMark { get; } = displayMark;
-    public HealthSettings Health { get; } = health;
-    public SpeedSettings Speed { get; } = speed;
+    public RangeSettings Health { get; } = health;
+    public RangeSettings Speed { get; } = speed;
     public PreySettings Preys { get; } = preys;
-    public DamageSettings Damage { get; } = damage;
+    public RangeSettings Damage { get; } = damage;
 }

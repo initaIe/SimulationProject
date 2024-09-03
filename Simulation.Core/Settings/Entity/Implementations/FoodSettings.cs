@@ -3,10 +3,10 @@ using Simulation.Core.Settings.Entity.Interfaces;
 
 namespace Simulation.Core.Settings.Entity.Implementations;
 
-public class FoodSettings(PercentAreaSettings percentArea, DisplaySettings displayMark, SatietySettings satiety)
+public class FoodSettings(RangeSettings percentArea, DisplaySettings displayMark, RangeSettings satiety)
     : IFoodSettings
 {
-    public PercentAreaSettings PercentArea { get; } = percentArea;
+    public RangeSettings PercentArea { get; } = percentArea;
     public DisplaySettings DisplayMark { get; } = displayMark;
-    public SatietySettings Satiety { get; } = satiety;
+    public RangeSettings Satiety { get; } = satiety;
 }

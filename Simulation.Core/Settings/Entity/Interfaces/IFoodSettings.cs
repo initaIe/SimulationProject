@@ -4,5 +4,5 @@ namespace Simulation.Core.Settings.Entity.Interfaces;
 
 public interface IFoodSettings : IEntitySettings
 {
-    SatietySettings Satiety { get; }
+    RangeSettings Satiety { get; }
 }

@@ -2,7 +2,7 @@
 
 namespace Simulation.Core.PathFinding;
 
-internal static class Utility
+internal static class PathFindingUtility
 {
     public static List<Node> GetNodePath(Node start, Node final)
     {

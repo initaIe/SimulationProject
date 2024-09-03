@@ -2,9 +2,9 @@
 using Simulation.Core.Settings.Entity.Interfaces;
 
 namespace Simulation.Core.Settings.Entity.Implementations;
-public class StaticObjectSettings(RangeSettings percentArea, DisplaySettings displayMark)
+public class StaticObjectSettings(LimitSettings percentArea, DisplaySettings displaySettings)
     : IEntitySettings
 {
-    public RangeSettings PercentArea { get; } = percentArea;
-    public DisplaySettings DisplayMark { get; } = displayMark;
+    public LimitSettings PercentArea { get; } = percentArea;
+    public DisplaySettings DisplaySettings { get; } = displaySettings;
 }

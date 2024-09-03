@@ -4,7 +4,7 @@ namespace Simulation.Core.Settings.Entity.Interfaces;
 
 public interface ICreatureSettings : IEntitySettings
 {
-    RangeSettings Health { get; }
-    RangeSettings Speed { get; }
+    LimitSettings Health { get; }
+    LimitSettings Speed { get; }
     PreySettings Preys { get; }
 }

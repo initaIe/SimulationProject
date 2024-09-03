@@ -17,23 +17,23 @@ public static class AstarPathfinder
 
         while (openList.Count > 0)
         {
-            var current = Utility.GetLowestCostNode(openList);
+            var current = PathFindingUtility.GetLowestCostNode(openList);
 
             openList.Remove(current);
             closedList.Add(current);
 
             // Если финальный узел достигнут, возвращает к нему путь
-            if (Utility.IsPathFounded(current, final))
-                return Utility.GetNodePath(start, current);
+            if (PathFindingUtility.IsPathFounded(current, final))
+                return PathFindingUtility.GetNodePath(start, current);
 
-            foreach (var neighbor in Utility.GetNeighbors(current, fieldWidth, fieldHeight))
+            foreach (var neighbor in PathFindingUtility.GetNeighbors(current, fieldWidth, fieldHeight))
             {
-                if (Utility.IsBarrier(neighbor, barriers) ||
-                    Utility.IsInClosedList(neighbor, closedList))
+                if (PathFindingUtility.IsBarrier(neighbor, barriers) ||
+                    PathFindingUtility.IsInClosedList(neighbor, closedList))
                     continue;
 
                 // Стоиомсть *направления* от текущего узла до соседа
-                int directionCostToNeighbor = Utility.GetDirectionCost(current, neighbor);
+                int directionCostToNeighbor = PathFindingUtility.GetDirectionCost(current, neighbor);
 
                 // Новая стоимость DirectionCost для соседа
                 int newNeighborDirectionCost = current.DirectionCost + directionCostToNeighbor;
@@ -41,11 +41,11 @@ public static class AstarPathfinder
                 // Проверка newNeighborDirectionCost >= neighbor.DirectionCost
                 // отбрасывает невыгодный путь к соседу
                 if (newNeighborDirectionCost >= neighbor.DirectionCost &&
-                    Utility.IsInOpenList(neighbor, openList))
+                    PathFindingUtility.IsInOpenList(neighbor, openList))
                     continue;
 
                 neighbor.DirectionCost = newNeighborDirectionCost;
-                neighbor.HeuristicCost = Utility.GetHeuristicCost(neighbor, final);
+                neighbor.HeuristicCost = PathFindingUtility.GetHeuristicCost(neighbor, final);
                 neighbor.Parent = current;
                 openList.Add(neighbor);
             }

@@ -3,6 +3,6 @@
 namespace Simulation.Core.Settings.Entity.Interfaces;
 public interface IEntitySettings
 {
-    RangeSettings PercentArea { get; }
-    DisplaySettings DisplayMark { get; }
+    LimitSettings PercentArea { get; }
+    DisplaySettings DisplaySettings { get; }
 }

@@ -4,5 +4,5 @@ namespace Simulation.Core.Settings.Entity.Interfaces;
 
 public interface IPredatorSettings : ICreatureSettings
 {
-    RangeSettings Damage { get; }
+    LimitSettings Damage { get; }
 }

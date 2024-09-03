@@ -2,79 +2,72 @@
 using Simulation.Core.Interfaces;
 using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
-using Simulation.Core.Settings.Entity.Interfaces;
+using Simulation.Core.Settings.Entity.Attributes;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Simulation.Core.Actions;
 
 public abstract class EntityCreationActionBase : IAction
 {
-    protected readonly Random Rnd = new();
+    protected readonly Random Random = new();
 
     public abstract void Perform(IMap map, SimulationSettings simulationSettings);
+    protected abstract IEntity CreateEntity(EntitiesSettings entitiesSettings);
+    protected abstract void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity);
 
-    public abstract IEntity CreateEntity(IMap map, SimulationSettings simulationSettings);
 
-    public abstract void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity);
-
-    public bool TryGetRandomEmptyLocation(IMap map, SimulationSettings simulationSettings, [MaybeNullWhen(false)] out Node node)
+    // Настройки лимитов(Минимальное кол-во, Максимальное кол-во) объектов задаются в % размере от кол-ва ячеек на поле.
+    // Данный метод конвертирует проценты в зависимости от размера нашего поля уже в конкретные числа.
+    protected LimitSettings GetLimitsOfObjectInNumbers(Type type, SimulationSettings simulationSettings)
     {
-        if (!HasFieldEmptyLocation(map, simulationSettings))
+        var staticObjectCountSettings = simulationSettings.Entities.GetEntitySettingsByType(type);
+
+        int totalCellsCount = simulationSettings.Field.GetCellsCount();
+
+        int minPercentArea = staticObjectCountSettings.PercentArea.Min;
+        int maxPercentArea = staticObjectCountSettings.PercentArea.Max;
+
+        const int percentConversionFactor = 100;
+
+        int minCount = totalCellsCount * minPercentArea / percentConversionFactor;
+        int maxCount = totalCellsCount * maxPercentArea / percentConversionFactor;
+
+        return new LimitSettings(minCount, maxCount);
+    }
+
+    protected bool TryGetRandomEmptyLocation(IMap map, FieldSettings fieldSettings,
+        [MaybeNullWhen(false)] out Node emptyLocation)
+    {
+        if (!HasFieldEmptyLocation(map, fieldSettings))
         {
-            node = null;
+            emptyLocation = null;
             return false;
         }
 
         Node rndLocation;
         do
         {
-            rndLocation = GetRandomLocation(simulationSettings);
+            rndLocation = GetRandomLocation(fieldSettings);
         } while (!map.IsLocationEmpty(rndLocation));
 
-        node = rndLocation;
+        emptyLocation = rndLocation;
         return true;
     }
 
-    public Node GetRandomLocation(SimulationSettings simulationSettings)
+    private Node GetRandomLocation(FieldSettings fieldSettings)
     {
-        Random rnd = new();
-
-        int x = rnd.Next(0, simulationSettings.Field.GetFieldWidth() - 1);
-        int y = rnd.Next(0, simulationSettings.Field.GetFieldHeight() - 1);
+        int x = Random.Next(0, fieldSettings.GetFieldWidth() - 1);
+        int y = Random.Next(0, fieldSettings.GetFieldHeight() - 1);
         return new Node(x, y);
     }
 
-    public bool HasFieldEmptyLocation(IMap map, SimulationSettings simulationSettings)
+    private bool HasFieldEmptyLocation(IMap map, FieldSettings fieldSettings)
     {
-        return map.GetCount() < simulationSettings.Field.GetCellsCount();
+        return map.GetCount() < fieldSettings.GetCellsCount();
     }
 
-    public (int min, int max) GetEntityQuantityRange(Type type, IMap map, SimulationSettings simulationSettings)
+    protected int GetRandomValueInLimits(LimitSettings limitSettings)
     {
-        int currentCount = map.GetCountByType(type);
-        var staticObjectCountSettings = simulationSettings.Entities.GetEntitySettingsByType(type);
-
-        int totalFieldCells = simulationSettings.Field.GetCellsCount();
-
-        int minPercentArea = staticObjectCountSettings.PercentArea.MinPercentArea;
-        int maxPercentArea = staticObjectCountSettings.PercentArea.MaxPercentArea;
-
-        const int baseNumber = 100;
-
-        int minCount = totalFieldCells * minPercentArea / baseNumber;
-        int maxCount = totalFieldCells * maxPercentArea / baseNumber;
-        return (minCount, maxCount);
-    }
-
-    public int GetRandomQuantityInRange(Type type, IMap map, SimulationSettings simulationSettings)
-    {
-        var rangeQuantity = GetEntityQuantityRange(type, map, simulationSettings);
-
-        return Rnd.Next(rangeQuantity.min, rangeQuantity.max);
-    }
-
-    public IEntitySettings GetEntitySettings(Type type, SimulationSettings simulationSettings)
-    {
-        return simulationSettings.Entities.GetEntitySettingsByType(type);
+        return Random.Next(limitSettings.Min, limitSettings.Max);
     }
 }

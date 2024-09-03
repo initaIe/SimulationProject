@@ -2,6 +2,7 @@
 using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
 using Simulation.Core.Settings;
+using Simulation.Core.Settings.Entity.Attributes;
 
 namespace Simulation.Core.Actions;
 public class StaticObjectCreationAction : EntityCreationActionBase
@@ -9,31 +10,34 @@ public class StaticObjectCreationAction : EntityCreationActionBase
     private readonly Type _type = typeof(StaticObject);
     public override void Perform(IMap map, SimulationSettings simulationSettings)
     {
-        var currentCount = map.GetCountByType(_type);
-        var randomQuantityInRange = GetRandomQuantityInRange(_type, map, simulationSettings);
+        var entityCurrentCount = map.GetCountByType(_type);
 
-        while (currentCount < randomQuantityInRange)
+        var entityCountLimits = GetLimitsOfObjectInNumbers(_type, simulationSettings);
+
+        var entityRandomMaxLimitCount = GetRandomValueInLimits(entityCountLimits);
+
+        while (entityCurrentCount < entityRandomMaxLimitCount)
         {
-            var newEntity = CreateEntity(map, simulationSettings);
-            SpawnEntity(map, simulationSettings, newEntity);
+            var newStaticObject = CreateEntity(simulationSettings.Entities);
+            SpawnEntity(map, simulationSettings, newStaticObject);
 
-            currentCount = map.GetCountByType(_type);
+            entityCurrentCount = map.GetCountByType(_type);
         }
     }
 
-    public override IEntity CreateEntity(IMap map, SimulationSettings simulationSettings)
+    protected override IEntity CreateEntity(EntitiesSettings entitiesSettings)
     {
-        var entitySettings = GetEntitySettings(_type, simulationSettings);
+        var entitySettings = entitiesSettings.GetEntitySettingsByType(_type);
         int max = entitySettings.DisplayMark.DisplayMarks.Count;
-        int randomIndex = Rnd.Next(0, max);
-        string displayMark = entitySettings.DisplayMark.DisplayMarks[randomIndex];
+        int randomIndex = Random.Next(0, max);
+        string displayMark = entitySettings.DisplayMark.DisplayMarks.ElementAt(randomIndex);
 
         return new StaticObject(displayMark);
     }
 
-    public void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity)
+    protected override void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity)
     {
-        if (!TryGetRandomEmptyLocation(map, simulationSettings, out var rndLocation)) return;
+        if (!TryGetRandomEmptyLocation(out var rndLocation)) return;
 
         map.Add(rndLocation, entity);
     }

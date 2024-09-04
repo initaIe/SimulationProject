@@ -12,7 +12,7 @@ public class StaticObjectCreationAction : EntityCreationActionBase
     {
         var entityCurrentCount = map.GetCountByType(_type);
 
-        var entityCountLimits = GetLimitsOfObjectInNumbers(_type, simulationSettings);
+        var entityCountLimits = GetLimitsOfEntityInNumbers(_type, simulationSettings);
 
         var entityRandomMaxLimitCount = GetRandomValueInLimits(entityCountLimits);
 
@@ -27,17 +27,14 @@ public class StaticObjectCreationAction : EntityCreationActionBase
 
     protected override IEntity CreateEntity(EntitiesSettings entitiesSettings)
     {
-        var entitySettings = entitiesSettings.GetEntitySettingsByType(_type);
-        int max = entitySettings.DisplayMark.DisplayMarks.Count;
-        int randomIndex = Random.Next(0, max);
-        string displayMark = entitySettings.DisplayMark.DisplayMarks.ElementAt(randomIndex);
+        var result = GetRandomDisplayMarkByType(_type, entitiesSettings);
 
-        return new StaticObject(displayMark);
+        return new StaticObject(result);
     }
 
     protected override void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity)
     {
-        if (!TryGetRandomEmptyLocation(out var rndLocation)) return;
+        if (!TryGetRandomEmptyLocation(map, simulationSettings.Field, out var rndLocation)) return;
 
         map.Add(rndLocation, entity);
     }

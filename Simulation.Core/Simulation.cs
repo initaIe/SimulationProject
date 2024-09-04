@@ -37,50 +37,50 @@ public class Simulation(
         _map.UpdateLocation(UpcastCreatureToEntity(creature), final);
     }
 
-    public IEntity? GetClosestPrey(ICreature creature)
-    {
-        var creatureLocation = _map.GetEntityLocation(UpcastCreatureToEntity(creature));
-        var barriers = GetBarriers();
-        int minTotalCost = int.MaxValue;
-        IEntity? closestPrey = null;
+    //public IEntity? GetClosestPrey(ICreature creature)
+    //{
+    //    var creatureLocation = _map.GetEntityLocation(UpcastCreatureToEntity(creature));
+    //    var barriers = GetBarriers();
+    //    int minTotalCost = int.MaxValue;
+    //    IEntity? closestPrey = null;
 
-        foreach (var prey in GetPreyEntites(creature))
-        {
-            var preyLocation = _map.GetEntityLocation(prey);
-            var fieldSizeSettings = _simulationSettings.Field.SizeSettings;
+    //    foreach (var prey in GetPreyEntites(creature))
+    //    {
+    //        var preyLocation = _map.GetEntityLocation(prey);
+    //        var fieldSizeSettings = _simulationSettings.Field.SizeSettings;
 
-            var path = AstarPathfinder.FindPath(
-                creatureLocation,
-                preyLocation,
-                barriers,
-                fieldSizeSettings.FieldWidth,
-                fieldSizeSettings.FieldHeight);
+    //        var path = AstarPathfinder.FindPath(
+    //            creatureLocation,
+    //            preyLocation,
+    //            barriers,
+    //            fieldSizeSettings.FieldWidth,
+    //            fieldSizeSettings.FieldHeight);
 
-            if (!path.Any()) continue;
+    //        if (!path.Any()) continue;
 
-            int totalCost = path[^1].TotalCost;
+    //        int totalCost = path[^1].TotalCost;
 
-            if (totalCost < minTotalCost)
-            {
-                minTotalCost = totalCost;
-                closestPrey = prey;
-            }
-        }
-        return closestPrey;
-    }
+    //        if (totalCost < minTotalCost)
+    //        {
+    //            minTotalCost = totalCost;
+    //            closestPrey = prey;
+    //        }
+    //    }
+    //    return closestPrey;
+    //}
 
-    public HashSet<Type> GetPreyTypes(ICreature creature)
-    {
-        var preySettings = _simulationSettings.Entities.Prey.PreyEntities;
-        return preySettings.TryGetValue(creature.GetType(), out var types) ? types : [];
-    }
+    //public HashSet<Type> GetPreyTypes(ICreature creature)
+    //{
+    //    var preySettings = _simulationSettings.Entities.Preys.PreyEntities;
+    //    return preySettings.TryGetValue(creature.GetType(), out var types) ? types : [];
+    //}
 
-    public HashSet<IEntity> GetPreyEntites(ICreature creature)
-    {
-        return GetPreyTypes(creature)?
-            .SelectMany(type => _map.GetEntitesByType(type))
-            .ToHashSet() ?? [];
-    }
+    //public HashSet<IEntity> GetPreyEntites(ICreature creature)
+    //{
+    //    return GetPreyTypes(creature)?
+    //        .SelectMany(type => _map.GetEntitesByType(type))
+    //        .ToHashSet() ?? [];
+    //}
 
     public HashSet<Node> GetBarriers()
     {

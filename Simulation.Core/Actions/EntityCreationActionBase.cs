@@ -9,7 +9,7 @@ namespace Simulation.Core.Actions;
 
 public abstract class EntityCreationActionBase : IAction
 {
-    protected readonly Random Random = new();
+    private readonly Random _random = new();
 
     public abstract void Perform(IMap map, SimulationSettings simulationSettings);
     protected abstract IEntity CreateEntity(EntitiesSettings entitiesSettings);
@@ -18,7 +18,7 @@ public abstract class EntityCreationActionBase : IAction
 
     // Настройки лимитов(Минимальное кол-во, Максимальное кол-во) объектов задаются в % размере от кол-ва ячеек на поле.
     // Данный метод конвертирует проценты в зависимости от размера нашего поля уже в конкретные числа.
-    protected LimitSettings GetLimitsOfObjectInNumbers(Type type, SimulationSettings simulationSettings)
+    protected LimitSettings GetLimitsOfEntityInNumbers(Type type, SimulationSettings simulationSettings)
     {
         var staticObjectCountSettings = simulationSettings.Entities.GetEntitySettingsByType(type);
 
@@ -56,8 +56,8 @@ public abstract class EntityCreationActionBase : IAction
 
     private Node GetRandomLocation(FieldSettings fieldSettings)
     {
-        int x = Random.Next(0, fieldSettings.GetFieldWidth() - 1);
-        int y = Random.Next(0, fieldSettings.GetFieldHeight() - 1);
+        int x = _random.Next(0, fieldSettings.GetFieldWidth());
+        int y = _random.Next(0, fieldSettings.GetFieldHeight());
         return new Node(x, y);
     }
 
@@ -68,6 +68,26 @@ public abstract class EntityCreationActionBase : IAction
 
     protected int GetRandomValueInLimits(LimitSettings limitSettings)
     {
-        return Random.Next(limitSettings.Min, limitSettings.Max);
+        return _random.Next(limitSettings.Min, limitSettings.Max);
+    }
+
+    protected string GetRandomDisplayMarkByType(Type type, EntitiesSettings entitiesSettings)
+    {
+        var displayMarks = entitiesSettings.GetEntitySettingsByType(type).DisplaySettings.DisplayMarks;
+
+        if (displayMarks == null || !displayMarks.Any())
+        {
+            throw new ArgumentException("Display marks list is empty or null");
+        }
+
+        int randomIndex = _random.Next(0, displayMarks.Count);
+        var result = displayMarks.ElementAtOrDefault(randomIndex);
+
+        if (result == default)
+        {
+            throw new ArgumentException("Display mark not found");
+        }
+
+        return result;
     }
 }

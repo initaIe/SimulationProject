@@ -7,7 +7,7 @@ namespace Simulation.Core.Implementations;
 /// Класс отвечает за отрисовку поля в консоли.
 /// </summary>
 /// <param name="fieldSettings">Настройки поля (Ширина, высота).</param>
-public class FieldRenderer(FieldSettings fieldSettings) : IFieldRender
+public class FieldConsoleRenderer(FieldSettings fieldSettings) : IFieldRender
 {
     public void RenderCleanField()
     {

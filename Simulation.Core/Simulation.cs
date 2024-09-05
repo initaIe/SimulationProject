@@ -1,7 +1,6 @@
 ﻿using Simulation.Core.Entities;
 using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
-using Simulation.Core.PathFinding;
 using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 

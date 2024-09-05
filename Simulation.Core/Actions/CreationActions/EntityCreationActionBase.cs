@@ -4,17 +4,26 @@ using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using Simulation.Core.Settings.Entity.Attributes;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
-namespace Simulation.Core.Actions;
+namespace Simulation.Core.Actions.CreationActions;
 
-public abstract class EntityCreationActionBase : IAction
+public abstract class EntityCreationActionBase<T> : IAction where T : IEntity
 {
     private readonly Random _random = new();
 
-    public abstract void Perform(IMap map, SimulationSettings simulationSettings);
-    protected abstract IEntity CreateEntity(EntitiesSettings entitiesSettings);
-    protected void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity)
+    public void Perform(IMap map, SimulationSettings simulationSettings)
+    {
+        var entityCountLimits = GetLimitsOfEntityInNumbers(typeof(T), simulationSettings);
+        var entityRandomMaxLimitCount = GetRandomValueInLimits(entityCountLimits);
+
+        while (map.GetCountByType(typeof(T)) < entityRandomMaxLimitCount)
+        {
+            var newEntity = CreateEntity(simulationSettings.Entities);
+            SpawnEntity(map, simulationSettings, newEntity);
+        }
+    }
+    protected abstract T CreateEntity(EntitiesSettings entitiesSettings);
+    protected void SpawnEntity(IMap map, SimulationSettings simulationSettings, T entity)
     {
         if (!TryGetRandomEmptyLocation(map, simulationSettings.Field, out var rndLocation)) return;
 
@@ -79,14 +88,14 @@ public abstract class EntityCreationActionBase : IAction
         return _random.Next(limitSettings.Min, limitSettings.Max);
     }
 
-    protected T GetRandomValue<T>(IEnumerable<T>? values)
+    protected TItem GetRandomValue<TItem>(IEnumerable<TItem>? items)
     {
-        if (values == null)
+        if (items == null)
         {
-            throw new ArgumentNullException(nameof(values), "Collection can not be null.");
+            throw new ArgumentNullException(nameof(items), "Collection can not be null.");
         }
 
-        var valueList = values.ToList();
+        var valueList = items.ToList();
 
         if (!valueList.Any())
         {

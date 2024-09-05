@@ -1,8 +1,8 @@
-﻿using Simulation.Core.POCOs;
+﻿using Simulation.Core.Interfaces;
+using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using Simulation.Core.Utilities;
 using System.Diagnostics.CodeAnalysis;
-using Simulation.Core.Interfaces;
 
 namespace Simulation.Core.PathFinding;
 

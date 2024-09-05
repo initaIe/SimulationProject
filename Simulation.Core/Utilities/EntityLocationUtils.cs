@@ -1,8 +1,8 @@
-﻿using Simulation.Core.Interfaces;
+﻿using Simulation.Core.Entities;
+using Simulation.Core.Interfaces;
 using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using System.Diagnostics.CodeAnalysis;
-using System;
 
 namespace Simulation.Core.Utilities;
 public static class EntityLocationUtils
@@ -40,5 +40,10 @@ public static class EntityLocationUtils
     public static bool HasFieldEmptyLocation(IMap map, FieldSettings fieldSettings)
     {
         return map.GetCount() < fieldSettings.GetCellsCount();
+    }
+
+    public static HashSet<Node> GetBarrierLocations(IMap map)
+    {
+        return map.GetEntitiesLocationsByType(typeof(StaticObject));
     }
 }

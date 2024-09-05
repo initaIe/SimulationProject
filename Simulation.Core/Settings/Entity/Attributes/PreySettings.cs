@@ -1,7 +1,5 @@
-﻿using Simulation.Core.Entities.Interfaces;
-
-namespace Simulation.Core.Settings.Entity.Attributes;
-public class PreySettings(HashSet<IEntity> preys)
+﻿namespace Simulation.Core.Settings.Entity.Attributes;
+public class PreySettings(HashSet<Type> preys)
 {
-    public HashSet<IEntity> Preys { get; set; } = preys;
+    public HashSet<Type> Preys { get; set; } = preys;
 }

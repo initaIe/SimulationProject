@@ -1,12 +1,19 @@
 ﻿using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using Simulation.Core.Utilities;
+using System.Diagnostics.CodeAnalysis;
+using Simulation.Core.Interfaces;
 
 namespace Simulation.Core.PathFinding;
 
 public static class AstarPathfinder
 {
-    public static List<Node> FindPath(Node start, Node final, HashSet<Node> barriers, FieldSettings fieldSettings)
+    public static bool TryFindPath(
+        Node start,
+        Node final,
+        HashSet<Node> barriers,
+        FieldSettings fieldSettings,
+        [MaybeNullWhen(false)] out List<Node> path)
     {
         ArgumentNullException.ThrowIfNull(start, nameof(start));
         ArgumentNullException.ThrowIfNull(final, nameof(final));
@@ -28,7 +35,10 @@ public static class AstarPathfinder
 
             // Если финальный узел достигнут, возвращает к нему путь
             if (AStarPathFindingUtils.IsPathFounded(current, final))
-                return AStarPathFindingUtils.GetNodePath(start, current);
+            {
+                path = AStarPathFindingUtils.GetNodePath(start, current);
+                return true;
+            }
 
             var neighbors = AStarPathFindingUtils.GetNeighbors
                 (current, fieldSettings.GetFieldWidth(), fieldSettings.GetFieldHeight());
@@ -58,6 +68,26 @@ public static class AstarPathfinder
             }
         }
         // Если путь не существует, возвращает пустой массив.
-        return [];
+        path = null;
+        return false;
+    }
+
+    public static bool TryFindPathCost(
+        IMap map,
+        Node start,
+        Node end,
+        HashSet<Node> barriers,
+        FieldSettings fieldSettings,
+        out int? cost)
+    {
+        AstarPathfinder.TryFindPath(start, end, barriers, fieldSettings, out var path);
+        if (path == null || !path.Any())
+        {
+            cost = null;
+            return false;
+        }
+
+        cost = path[^1].TotalCost;
+        return true;
     }
 }

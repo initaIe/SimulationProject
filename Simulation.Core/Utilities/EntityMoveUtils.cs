@@ -9,6 +9,4 @@ public static class EntityMoveUtils
     {
         map.UpdateLocation((IEntity)creature, final);
     }
-
-
 }

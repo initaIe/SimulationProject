@@ -3,13 +3,9 @@ using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 
 namespace Simulation.Core.Implementations;
-/// <summary>
-/// Класс отвечает за отрисовку поля в консоли.
-/// </summary>
-/// <param name="fieldSettings">Настройки поля (Ширина, высота).</param>
-public class FieldConsoleRenderer(FieldSettings fieldSettings) : IFieldRender
+public class FieldConsoleRenderer : IFieldRender
 {
-    public void RenderCleanField()
+    public void RenderCleanField(FieldSettings fieldSettings)
     {
         for (int i = 0; i < fieldSettings.GetFieldHeight(); i++)
         {
@@ -23,14 +19,18 @@ public class FieldConsoleRenderer(FieldSettings fieldSettings) : IFieldRender
 
     // Эмодзи занимают 2 ед. по ширине, поэтому необходимо координату
     // по Х умножать на 2 для корректного отображения
-    public void Render(HashSet<EntityRenderData> renderEntityData)
+    public void Render(FieldSettings fieldSettings, Dictionary<string, HashSet<Node>> spritePositions)
     {
         Console.Clear();
-        RenderCleanField();
-        foreach (var data in renderEntityData)
+        RenderCleanField(fieldSettings);
+        foreach (var sprite in spritePositions)
         {
-            Console.SetCursorPosition(data.Node.X * 2, data.Node.Y);
-            Console.Write(data.DisplayMark);
+            foreach (var location in sprite.Value)
+            {
+                Console.SetCursorPosition(location.X * 2, location.Y);
+                Console.Write(sprite.Key);
+            }
         }
+        Console.SetCursorPosition(0, 0);
     }
 }

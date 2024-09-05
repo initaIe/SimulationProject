@@ -12,8 +12,4 @@ public class Herbivore(string sprite, int speed, int health)
     : CreatureBase(sprite, speed, health), IHerbivore
 {
     public void TakeDamage(int damage) => Health -= damage;
-    public override void TurnMove()
-    {
-        //может потратить ход на поиск травы либо на ее поглащение
-    }
 }

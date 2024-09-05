@@ -2,7 +2,6 @@
 using Simulation.Core.Interfaces;
 using Simulation.Core.Settings;
 using Simulation.Core.Settings.Entity.Attributes;
-using Simulation.Core.Settings.Entity.Interfaces;
 using Simulation.Core.Utilities;
 
 namespace Simulation.Core.Actions.CreationActions;
@@ -31,7 +30,6 @@ public abstract class EntityCreationActionBase<T> : IAction
         map.Add(rndLocation, entity);
     }
 
-
     /* Настройки лимитов(Минимальное кол-во, Максимальное кол-во) объектов задаются в % размере от кол-ва ячеек на поле.
     Данный метод конвертирует проценты в зависимости от размера нашего поля уже в конкретные числа. */
     protected LimitSettings GetLimitsOfEntityInNumbers(Type type, SimulationSettings simulationSettings)
@@ -50,7 +48,6 @@ public abstract class EntityCreationActionBase<T> : IAction
 
         return new LimitSettings(minCount, maxCount);
     }
-
 
     protected int GetRandomValueInLimits(LimitSettings limitSettings)
     {

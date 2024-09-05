@@ -1,4 +1,4 @@
-﻿using Simulation.Core.PathFinding;
+﻿using Simulation.Core.Enums;
 using Simulation.Core.POCOs;
 
 namespace Simulation.Core.Utilities;
@@ -27,12 +27,12 @@ internal static class AStarPathFindingUtils
 
     public static int GetHeuristicCost(Node start, Node final)
     {
-        return (Math.Abs(start.X - final.X) + Math.Abs(start.Y - final.Y)) * (int)MovementCost.Manhattan;
+        return (Math.Abs(start.X - final.X) + Math.Abs(start.Y - final.Y)) * (int)AStarMovementCost.Manhattan;
     }
 
     public static int GetDirectionCost(Node current, Node neighbor)
     {
-        return IsDiagonalDirection(current, neighbor) ? (int)MovementCost.Diagonal : (int)MovementCost.Orthogonal;
+        return IsDiagonalDirection(current, neighbor) ? (int)AStarMovementCost.Diagonal : (int)AStarMovementCost.Orthogonal;
     }
 
     public static bool IsDiagonalDirection(Node current, Node neighbor)

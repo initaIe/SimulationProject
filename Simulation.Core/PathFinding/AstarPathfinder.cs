@@ -1,17 +1,20 @@
 ﻿using Simulation.Core.POCOs;
+using Simulation.Core.Settings;
 using Simulation.Core.Utilities;
 
 namespace Simulation.Core.PathFinding;
 
 public static class AstarPathfinder
 {
-    public static List<Node> FindPath(Node start, Node final, HashSet<Node> barriers, int fieldWidth, int fieldHeight)
+    public static List<Node> FindPath(Node start, Node final, HashSet<Node> barriers, FieldSettings fieldSettings)
     {
         ArgumentNullException.ThrowIfNull(start, nameof(start));
         ArgumentNullException.ThrowIfNull(final, nameof(final));
         ArgumentNullException.ThrowIfNull(barriers, nameof(barriers));
-        if (fieldWidth == 0) throw new ArgumentException("Field width can not be zero.", nameof(fieldWidth));
-        if (fieldHeight == 0) throw new ArgumentException("Field height can not be zero.", nameof(fieldHeight));
+        if (fieldSettings.GetFieldWidth() == 0)
+            throw new ArgumentException("Field width can not be zero.", nameof(fieldSettings.SizeSettings.FieldWidth));
+        if (fieldSettings.GetFieldHeight() == 0)
+            throw new ArgumentException("Field height can not be zero.", nameof(fieldSettings.SizeSettings.FieldHeight));
 
         var openList = new HashSet<Node> { start };
         var closedList = new HashSet<Node>();
@@ -27,7 +30,10 @@ public static class AstarPathfinder
             if (AStarPathFindingUtils.IsPathFounded(current, final))
                 return AStarPathFindingUtils.GetNodePath(start, current);
 
-            foreach (var neighbor in AStarPathFindingUtils.GetNeighbors(current, fieldWidth, fieldHeight))
+            var neighbors = AStarPathFindingUtils.GetNeighbors
+                (current, fieldSettings.GetFieldWidth(), fieldSettings.GetFieldHeight());
+
+            foreach (var neighbor in neighbors)
             {
                 if (AStarPathFindingUtils.IsBarrier(neighbor, barriers) ||
                     AStarPathFindingUtils.IsInClosedList(neighbor, closedList))

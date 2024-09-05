@@ -11,11 +11,11 @@ public class FieldConsoleRenderer(FieldSettings fieldSettings) : IFieldRender
 {
     public void RenderCleanField()
     {
-        for (int i = 0; i < fieldSettings.SizeSettings.FieldHeight; i++)
+        for (int i = 0; i < fieldSettings.GetFieldHeight(); i++)
         {
-            for (int j = 0; j < fieldSettings.SizeSettings.FieldWidth; j++)
+            for (int j = 0; j < fieldSettings.GetFieldWidth(); j++)
             {
-                Console.Write(fieldSettings.DisplaySettings.EmptyCellDisplayMark);
+                Console.Write(fieldSettings.GetEmptyCellDisplayMark());
             }
             Console.WriteLine();
         }
@@ -25,6 +25,7 @@ public class FieldConsoleRenderer(FieldSettings fieldSettings) : IFieldRender
     // по Х умножать на 2 для корректного отображения
     public void Render(HashSet<EntityRenderData> renderEntityData)
     {
+        Console.Clear();
         RenderCleanField();
         foreach (var data in renderEntityData)
         {

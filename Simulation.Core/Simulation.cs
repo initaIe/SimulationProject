@@ -28,13 +28,7 @@ public class Simulation(
         }
         return data;
     }
-
-
-
-    public void MoveCreature(ICreature creature, Node final)
-    {
-        _map.UpdateLocation(UpcastCreatureToEntity(creature), final);
-    }
+    
 
     //public IEntity? GetClosestPrey(ICreature creature)
     //{
@@ -84,15 +78,5 @@ public class Simulation(
     public HashSet<Node> GetBarriers()
     {
         return _map.GetEntitiesLocationsByType(typeof(StaticObject));
-    }
-
-    public Guid GetGuid(IEntity entity)
-    {
-        return entity.Id;
-    }
-
-    public IEntity UpcastCreatureToEntity(ICreature creature)
-    {
-        return (creature as IEntity)!;
     }
 }

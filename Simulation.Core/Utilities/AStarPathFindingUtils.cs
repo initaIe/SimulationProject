@@ -1,8 +1,9 @@
-﻿using Simulation.Core.POCOs;
+﻿using Simulation.Core.PathFinding;
+using Simulation.Core.POCOs;
 
-namespace Simulation.Core.PathFinding;
+namespace Simulation.Core.Utilities;
 
-internal static class PathFindingUtility
+internal static class AStarPathFindingUtils
 {
     public static List<Node> GetNodePath(Node start, Node final)
     {
@@ -36,7 +37,7 @@ internal static class PathFindingUtility
 
     public static bool IsDiagonalDirection(Node current, Node neighbor)
     {
-        return (current.X != neighbor.X && current.Y != neighbor.Y);
+        return current.X != neighbor.X && current.Y != neighbor.Y;
     }
 
     public static List<Node> GetNeighbors(Node node, int fieldWidth, int fieldHeight)

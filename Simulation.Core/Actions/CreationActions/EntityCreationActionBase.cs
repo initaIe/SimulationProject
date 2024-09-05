@@ -1,13 +1,14 @@
 ﻿using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
-using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using Simulation.Core.Settings.Entity.Attributes;
-using System.Diagnostics.CodeAnalysis;
+using Simulation.Core.Settings.Entity.Interfaces;
+using Simulation.Core.Utilities;
 
 namespace Simulation.Core.Actions.CreationActions;
 
-public abstract class EntityCreationActionBase<T> : IAction where T : IEntity
+public abstract class EntityCreationActionBase<T> : IAction
+    where T : IEntity
 {
     private readonly Random _random = new();
 
@@ -25,7 +26,7 @@ public abstract class EntityCreationActionBase<T> : IAction where T : IEntity
     protected abstract T CreateEntity(EntitiesSettings entitiesSettings);
     protected void SpawnEntity(IMap map, SimulationSettings simulationSettings, T entity)
     {
-        if (!TryGetRandomEmptyLocation(map, simulationSettings.Field, out var rndLocation)) return;
+        if (!EntityLocationUtils.TryGetRandomEmptyLocation(map, simulationSettings.Field, out var rndLocation)) return;
 
         map.Add(rndLocation, entity);
     }
@@ -50,38 +51,6 @@ public abstract class EntityCreationActionBase<T> : IAction where T : IEntity
         return new LimitSettings(minCount, maxCount);
     }
 
-    // TODO: this method needs to be reworked/optimized.
-    protected bool TryGetRandomEmptyLocation(IMap map, FieldSettings fieldSettings,
-        [MaybeNullWhen(false)] out Node emptyLocation)
-    {
-        if (!HasFieldEmptyLocation(map, fieldSettings))
-        {
-            emptyLocation = null;
-            return false;
-        }
-
-        Node rndLocation;
-        do
-        {
-            rndLocation = GetRandomLocation(fieldSettings);
-        } while (!map.IsLocationEmpty(rndLocation));
-
-        emptyLocation = rndLocation;
-        return true;
-    }
-
-    // TODO: move location getting methods to static utility class.
-    private Node GetRandomLocation(FieldSettings fieldSettings)
-    {
-        int x = _random.Next(0, fieldSettings.GetFieldWidth());
-        int y = _random.Next(0, fieldSettings.GetFieldHeight());
-        return new Node(x, y);
-    }
-
-    private bool HasFieldEmptyLocation(IMap map, FieldSettings fieldSettings)
-    {
-        return map.GetCount() < fieldSettings.GetCellsCount();
-    }
 
     protected int GetRandomValueInLimits(LimitSettings limitSettings)
     {

@@ -5,12 +5,12 @@ namespace Simulation.Core.Entities;
 /// <summary>
 /// Объект хищник.
 /// </summary>
-/// <param name="displayMark">Отображаемая марка объекта</param>
+/// <param name="sprite">Отображаемая марка объекта</param>
 /// <param name="speed">Скорость объекта</param>
 /// <param name="health">Здоровье объекта</param>
 /// <param name="damage">Урон объекта</param>
-public class Predator(string displayMark, int speed, int health, int damage)
-    : CreatureBase(displayMark, speed, health), IPredator
+public class Predator(string sprite, int speed, int health, int damage)
+    : CreatureBase(sprite, speed, health), IPredator
 {
     public int Damage { get; init; } = damage;
     public override void TurnMove()

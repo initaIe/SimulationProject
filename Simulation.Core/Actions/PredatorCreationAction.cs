@@ -2,13 +2,12 @@
 using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
 using Simulation.Core.Settings;
-using Simulation.Core.Settings.Entity.Attributes;
 using Simulation.Core.Settings.Entity.Implementations;
 
 namespace Simulation.Core.Actions;
-public class StaticObjectCreationAction : EntityCreationActionBase
+public class PredatorCreationAction : EntityCreationActionBase
 {
-    private readonly Type _type = typeof(StaticObject);
+    private readonly Type _type = typeof(Predator);
 
     public override void Perform(IMap map, SimulationSettings simulationSettings)
     {
@@ -25,10 +24,12 @@ public class StaticObjectCreationAction : EntityCreationActionBase
 
     protected override IEntity CreateEntity(EntitiesSettings entitiesSettings)
     {
-        var staticObjectSettings = (StaticObjectSettings)entitiesSettings.GetEntitySettingsByType(_type);
+        var predatorSettings = (PredatorSettings)entitiesSettings.GetEntitySettingsByType(_type);
+        var sprite = GetRandomValue(predatorSettings.DisplaySettings.Sprites);
+        var speed = GetRandomValueInLimits(predatorSettings.Speed);
+        var health = GetRandomValueInLimits(predatorSettings.Health);
+        var damage = GetRandomValueInLimits(predatorSettings.Damage);
 
-        var sprite = GetRandomValue(staticObjectSettings.DisplaySettings.Sprites);
-
-        return new StaticObject(sprite);
+        return new Predator(sprite, speed, health, damage);
     }
 }

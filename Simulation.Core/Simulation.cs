@@ -25,7 +25,7 @@ public class Simulation(
         foreach (var entity in allEntities)
         {
             var coordinate = _map.GetEntityLocation(entity);
-            data.Add(new EntityRenderData(entity.DisplayMark, coordinate));
+            data.Add(new EntityRenderData(entity.Sprite, coordinate));
         }
         return data;
     }

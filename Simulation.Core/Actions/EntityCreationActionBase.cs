@@ -4,6 +4,7 @@ using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using Simulation.Core.Settings.Entity.Attributes;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Simulation.Core.Actions;
 
@@ -13,11 +14,16 @@ public abstract class EntityCreationActionBase : IAction
 
     public abstract void Perform(IMap map, SimulationSettings simulationSettings);
     protected abstract IEntity CreateEntity(EntitiesSettings entitiesSettings);
-    protected abstract void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity);
+    protected void SpawnEntity(IMap map, SimulationSettings simulationSettings, IEntity entity)
+    {
+        if (!TryGetRandomEmptyLocation(map, simulationSettings.Field, out var rndLocation)) return;
+
+        map.Add(rndLocation, entity);
+    }
 
 
-    // Настройки лимитов(Минимальное кол-во, Максимальное кол-во) объектов задаются в % размере от кол-ва ячеек на поле.
-    // Данный метод конвертирует проценты в зависимости от размера нашего поля уже в конкретные числа.
+    /* Настройки лимитов(Минимальное кол-во, Максимальное кол-во) объектов задаются в % размере от кол-ва ячеек на поле.
+    Данный метод конвертирует проценты в зависимости от размера нашего поля уже в конкретные числа. */
     protected LimitSettings GetLimitsOfEntityInNumbers(Type type, SimulationSettings simulationSettings)
     {
         var staticObjectCountSettings = simulationSettings.Entities.GetEntitySettingsByType(type);
@@ -35,6 +41,7 @@ public abstract class EntityCreationActionBase : IAction
         return new LimitSettings(minCount, maxCount);
     }
 
+    // TODO: this method needs to be reworked/optimized.
     protected bool TryGetRandomEmptyLocation(IMap map, FieldSettings fieldSettings,
         [MaybeNullWhen(false)] out Node emptyLocation)
     {
@@ -54,6 +61,7 @@ public abstract class EntityCreationActionBase : IAction
         return true;
     }
 
+    // TODO: move location getting methods to static utility class.
     private Node GetRandomLocation(FieldSettings fieldSettings)
     {
         int x = _random.Next(0, fieldSettings.GetFieldWidth());
@@ -71,21 +79,27 @@ public abstract class EntityCreationActionBase : IAction
         return _random.Next(limitSettings.Min, limitSettings.Max);
     }
 
-    protected string GetRandomDisplayMarkByType(Type type, EntitiesSettings entitiesSettings)
+    protected T GetRandomValue<T>(IEnumerable<T>? values)
     {
-        var displayMarks = entitiesSettings.GetEntitySettingsByType(type).DisplaySettings.DisplayMarks;
-
-        if (displayMarks == null || !displayMarks.Any())
+        if (values == null)
         {
-            throw new ArgumentException("Display marks list is empty or null");
+            throw new ArgumentNullException(nameof(values), "Collection can not be null.");
         }
 
-        int randomIndex = _random.Next(0, displayMarks.Count);
-        var result = displayMarks.ElementAtOrDefault(randomIndex);
+        var valueList = values.ToList();
 
-        if (result == default)
+        if (!valueList.Any())
         {
-            throw new ArgumentException("Display mark not found");
+            throw new ArgumentNullException(nameof(valueList), "Collection can not be empty.");
+        }
+
+        int randomIndex = _random.Next(0, valueList.Count);
+
+        var result = valueList.ElementAtOrDefault(randomIndex);
+
+        if (result == null)
+        {
+            throw new ArgumentException("Value not found.");
         }
 
         return result;

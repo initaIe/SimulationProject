@@ -2,13 +2,12 @@
 using Simulation.Core.Entities.Interfaces;
 using Simulation.Core.Interfaces;
 using Simulation.Core.Settings;
-using Simulation.Core.Settings.Entity.Attributes;
 using Simulation.Core.Settings.Entity.Implementations;
 
 namespace Simulation.Core.Actions;
-public class StaticObjectCreationAction : EntityCreationActionBase
+public class FoodCreationAction : EntityCreationActionBase
 {
-    private readonly Type _type = typeof(StaticObject);
+    private readonly Type _type = typeof(Food);
 
     public override void Perform(IMap map, SimulationSettings simulationSettings)
     {
@@ -25,10 +24,10 @@ public class StaticObjectCreationAction : EntityCreationActionBase
 
     protected override IEntity CreateEntity(EntitiesSettings entitiesSettings)
     {
-        var staticObjectSettings = (StaticObjectSettings)entitiesSettings.GetEntitySettingsByType(_type);
+        var foodSettings = (FoodSettings)entitiesSettings.GetEntitySettingsByType(_type);
+        var sprite = GetRandomValue(foodSettings.DisplaySettings.Sprites);
+        var satiety = GetRandomValueInLimits(foodSettings.Satiety);
 
-        var sprite = GetRandomValue(staticObjectSettings.DisplaySettings.Sprites);
-
-        return new StaticObject(sprite);
+        return new Food(sprite, satiety);
     }
 }

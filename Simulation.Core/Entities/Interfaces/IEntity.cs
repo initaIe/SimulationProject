@@ -2,5 +2,5 @@
 public interface IEntity
 {
     Guid Id { get; }
-    string DisplayMark { get; }
+    string Sprite { get; }
 }

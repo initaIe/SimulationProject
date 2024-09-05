@@ -5,9 +5,9 @@ namespace Simulation.Core.Entities;
 /// <summary>
 /// Объект еды.
 /// </summary>
-/// <param name="displayMark">Отображаемая марка объекта.</param>
+/// <param name="sprite">Отображаемая марка объекта.</param>
 /// <param name="satiety">Сытность еды.</param>
-public class Food(string displayMark, int satiety) : EntityBase(displayMark), IEatable
+public class Food(string sprite, int satiety) : EntityBase(sprite), IEatable
 {
     public int Satiety { get; init; } = satiety;
 }

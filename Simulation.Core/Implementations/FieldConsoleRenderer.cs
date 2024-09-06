@@ -27,10 +27,9 @@ public class FieldConsoleRenderer : IFieldRender
         {
             foreach (var location in sprite.Value)
             {
-                Console.SetCursorPosition(location.X * 2, location.Y);
+                Console.SetCursorPosition(location.X*2, location.Y);
                 Console.Write(sprite.Key);
             }
         }
-        Console.SetCursorPosition(0, 0);
     }
 }

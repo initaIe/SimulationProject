@@ -42,8 +42,9 @@ public static class EntityLocationUtils
         return map.GetCount() < fieldSettings.GetCellsCount();
     }
 
+    // TODO: ПОФИКСИТЬ ЭТУ ЕБАННУЮ ШЛЯПУ, ДОЛЖЕН ВОЗВРАЩАТЬ БАРЬЕРЫ КРОМЕ СЕБЯ/ЦЕЛИ
     public static HashSet<Node> GetBarrierLocations(IMap map)
     {
-        return map.GetEntitiesLocationsByType(typeof(StaticObject));
+        return map.GetEntitiesLocations();
     }
 }

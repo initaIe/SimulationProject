@@ -17,6 +17,7 @@ internal static class AStarPathFindingUtils
         }
 
         path.Reverse();
+        
         return path;
     }
 

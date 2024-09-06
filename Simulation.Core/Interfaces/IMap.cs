@@ -5,34 +5,35 @@ namespace Simulation.Core.Interfaces;
 
 public interface IMap : IEntityManager, IEntityLocationManager
 {
-    public void Add(Node node, IEntity entity);
+    void Add(Node node, IEntity entity);
 
-    public void Remove(Node node);
-    public void Remove(IEntity entity);
+    void Remove(Node node);
+    void Remove(IEntity entity);
 }
 public interface IEntityManager
 {
-    public IEntity GetEntity(Node node);
+    IEntity GetEntity(Node node);
 
-    public void UpdateEntity(Node node, IEntity newEntity);
+    void UpdateEntity(Node node, IEntity newEntity);
 
-    public HashSet<IEntity> GetEntities();
+    HashSet<IEntity> GetEntities();
 
-    public int GetCount();
+    int GetCount();
 
-    public int GetCountByType(Type type);
+    int GetCountByType(Type type);
 
-    public HashSet<IEntity> GetEntitesByType(Type type);
+    HashSet<IEntity> GetEntitesByType(Type type);
 
 }
 
 public interface IEntityLocationManager
 {
-    public Node GetEntityLocation(IEntity entity);
+    Node GetEntityLocation(IEntity entity);
 
-    public void UpdateLocation(IEntity entity, Node newNode);
+    void UpdateLocation(IEntity entity, Node newNode);
 
-    public bool IsLocationEmpty(Node node);
+    bool IsLocationEmpty(Node node);
 
-    public HashSet<Node> GetEntitiesLocationsByType(Type type);
+    HashSet<Node> GetEntitiesLocationsByType(Type type);
+    HashSet<Node> GetEntitiesLocations();
 }

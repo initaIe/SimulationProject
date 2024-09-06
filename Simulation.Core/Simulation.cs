@@ -1,11 +1,13 @@
 ﻿using Simulation.Core.Actions;
 using Simulation.Core.Actions.CreationActions;
+using Simulation.Core.Actions.TurnMoveActions;
 using Simulation.Core.Interfaces;
 using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using Simulation.Core.Utilities;
 
 namespace Simulation.Core;
+
 public class Simulation(
     IMap map,
     IFieldRender fieldRender,
@@ -16,25 +18,29 @@ public class Simulation(
     private readonly IFieldRender _fieldRender = fieldRender;
     private readonly ITurnTracker _turnTracker = turnTracker;
     private readonly SimulationSettings _settings = settings;
-    private readonly List<IAction> _actions = [];
+    private readonly List<IAction> _initActions = [];
+    private readonly List<IAction> _turnActions = [];
+
     public void Start()
     {
         CreateActions();
+        _initActions.ForEach(a => a.Perform(_map, _settings));
         while (true)
         {
-            _actions.ForEach(a => a.Perform(_map, _settings));
+            _turnActions.ForEach(a => a.Perform(_map, _settings));
             _fieldRender.Render(_settings.Field, ConsoleRenderUtils.GetRenderEntityData(_map));
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
         }
     }
+
     private void CreateActions()
     {
-        _actions.Add(new StaticObjectCreationAction());
-        _actions.Add(new FoodCreationAction());
-        _actions.Add(new HerbivoreCreationAction());
-        _actions.Add(new PredatorCreationAction());
-        
-        _actions.Add(new HerbivoreCreationAction());
-        _actions.Add(new PredatorCreationAction());
+        _initActions.Add(new StaticObjectCreationAction());
+        _initActions.Add(new FoodCreationAction());
+        _initActions.Add(new HerbivoreCreationAction());
+        _initActions.Add(new PredatorCreationAction());
+
+        _turnActions.Add(new HerbivoreTurnMoveAction());
+        _turnActions.Add(new PredatorTurnMoveAction());
     }
 }

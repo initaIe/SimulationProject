@@ -4,7 +4,7 @@ using Simulation.Core.Interfaces;
 
 namespace Simulation.Core.Actions.TurnMoveActions;
 
-public class HerbivoreTurnMoveAction<T> : EntityTurnMoveActionBase<Herbivore>
+public class HerbivoreTurnMoveAction : EntityTurnMoveActionBase<Herbivore>
 {
     protected override void InteractWithPrey(IMap map, ICreature creature, IEntity prey)
     {

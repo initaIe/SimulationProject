@@ -61,9 +61,9 @@ public class Map : IMap
             throw new KeyNotFoundException("Entity not found.");
         }
 
-        var keyValuePair = _entities.First(x => x.Value.Equals(entity));
+        var key = _entities.First(x => x.Value.Equals(entity)).Key;
 
-        Remove(keyValuePair.Key);
+        Remove(key);
         Add(newNode, entity);
     }
 
@@ -105,4 +105,13 @@ public class Map : IMap
                 .Select(z => z.Key)
         ];
     }
+    public HashSet<Node> GetEntitiesLocations()
+    {
+        return
+        [
+            .. _entities
+                .Select(z => z.Key)
+        ];
+    }
+
 }

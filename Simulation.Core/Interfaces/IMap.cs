@@ -8,6 +8,7 @@ public interface IMap : IEntityManager, IEntityLocationManager
     public void Add(Node node, IEntity entity);
 
     public void Remove(Node node);
+    public void Remove(IEntity entity);
 }
 public interface IEntityManager
 {

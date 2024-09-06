@@ -5,7 +5,7 @@ using Simulation.Core.Settings;
 namespace Simulation.Core.Implementations;
 public class FieldConsoleRenderer : IFieldRender
 {
-    public void RenderCleanField(FieldSettings fieldSettings)
+    private void RenderCleanField(FieldSettings fieldSettings)
     {
         for (int i = 0; i < fieldSettings.GetFieldHeight(); i++)
         {

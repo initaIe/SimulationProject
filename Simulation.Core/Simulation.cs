@@ -12,5 +12,4 @@ public class Simulation(
     private readonly IFieldRender _mapRender = fieldRender;
     private readonly ITurnTracker _turnTracker = turnTracker;
     private readonly SimulationSettings _simulationSettings = simulationSettings;
-
 }

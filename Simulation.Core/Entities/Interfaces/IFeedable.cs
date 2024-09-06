@@ -2,5 +2,5 @@
 
 public interface IFeedable
 {
-    void Eat(int satiety);
+    void Eat(IEatable entity);
 }

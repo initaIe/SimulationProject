@@ -23,7 +23,8 @@ public abstract class EntityCreationActionBase<T> : IAction
         }
     }
     protected abstract T CreateEntity(EntitiesSettings entitiesSettings);
-    protected void SpawnEntity(IMap map, SimulationSettings simulationSettings, T entity)
+
+    private void SpawnEntity(IMap map, SimulationSettings simulationSettings, T entity)
     {
         if (!EntityLocationUtils.TryGetRandomEmptyLocation(map, simulationSettings.Field, out var rndLocation)) return;
 
@@ -32,7 +33,7 @@ public abstract class EntityCreationActionBase<T> : IAction
 
     /* Настройки лимитов(Минимальное кол-во, Максимальное кол-во) объектов задаются в % размере от кол-ва ячеек на поле.
     Данный метод конвертирует проценты в зависимости от размера нашего поля уже в конкретные числа. */
-    protected LimitSettings GetLimitsOfEntityInNumbers(Type type, SimulationSettings simulationSettings)
+    private LimitSettings GetLimitsOfEntityInNumbers(Type type, SimulationSettings simulationSettings)
     {
         var staticObjectCountSettings = simulationSettings.Entities.GetEntitySettingsByType(type);
 
@@ -63,7 +64,7 @@ public abstract class EntityCreationActionBase<T> : IAction
 
         var valueList = items.ToList();
 
-        if (!valueList.Any())
+        if (valueList.Count == 0)
         {
             throw new ArgumentNullException(nameof(valueList), "Collection can not be empty.");
         }

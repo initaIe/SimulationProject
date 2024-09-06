@@ -4,7 +4,7 @@ using Simulation.Core.POCOs;
 
 namespace Simulation.Core.Implementations;
 public class Map : IMap
-{
+{   
     private readonly Dictionary<Node, IEntity> _entities = [];
 
     public void Add(Node node, IEntity entity)
@@ -21,6 +21,12 @@ public class Map : IMap
         {
             throw new KeyNotFoundException($"Key {node} not found.");
         }
+    }
+    
+    public void Remove(IEntity entity)
+    {
+        var location = GetEntityLocation(entity);
+        _entities.Remove(location);
     }
 
     public IEntity GetEntity(Node node)

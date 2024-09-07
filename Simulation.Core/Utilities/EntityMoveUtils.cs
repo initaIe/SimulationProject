@@ -20,7 +20,7 @@ public static class EntityMoveUtils
         var creatureLocation = map.GetEntityLocation((IEntity)creature);
         var neighbors = AStarPathFindingUtils.GetNeighbors(creatureLocation, fieldSettings.GetFieldWidth(),
             fieldSettings.GetFieldHeight());
-
+        
         // TODO: проверять чтобы не пиздовал туда где есть объект, пока костыль
         foreach (var neighbor in neighbors)
         {

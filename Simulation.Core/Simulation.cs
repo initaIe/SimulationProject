@@ -29,7 +29,7 @@ public class Simulation(
         {
             _turnActions.ForEach(a => a.Perform(_map, _settings));
             _fieldRender.Render(_settings.Field, ConsoleRenderUtils.GetRenderEntityData(_map));
-            Thread.Sleep(1000);
+            Thread.Sleep(250);
         }
     }
 

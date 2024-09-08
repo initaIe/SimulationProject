@@ -41,7 +41,7 @@ internal static class AStarPathFindingUtils
         return current.X != neighbor.X && current.Y != neighbor.Y;
     }
 
-    public static List<Node> GetNeighbors(Node node, int fieldWidth, int fieldHeight)
+    public static List<Node> GetNeighborCells(Node node, int fieldWidth, int fieldHeight)
     {
         var directions = new (int x, int y)[]
         {

@@ -3,8 +3,10 @@ using Simulation.Core.Interfaces;
 using Simulation.Core.POCOs;
 using Simulation.Core.Settings;
 using System.Diagnostics.CodeAnalysis;
+using Simulation.Core.Entities.Interfaces;
 
 namespace Simulation.Core.Utilities;
+
 public static class EntityLocationUtils
 {
     private static readonly Random Random = new();
@@ -42,9 +44,18 @@ public static class EntityLocationUtils
         return map.GetCount() < fieldSettings.GetCellsCount();
     }
 
-    // TODO: ПОФИКСИТЬ ЭТУ ЕБАННУЮ ШЛЯПУ, ДОЛЖЕН ВОЗВРАЩАТЬ БАРЬЕРЫ КРОМЕ СЕБЯ/ЦЕЛИ
-    public static HashSet<Node> GetBarrierLocations(IMap map)
+    public static HashSet<Node> GetLocationsOfBarriers(IMap map)
     {
         return map.GetEntitiesLocations();
+    }
+
+    public static HashSet<Node> GetLocationsOfBarriersExcludingEndpoints(IMap map, IEntity startEntity,
+        IEntity endEntity)
+    {
+        var startEntityLocation = map.GetEntityLocation(startEntity);
+        var endEntityLocation = map.GetEntityLocation(endEntity);
+        
+        return map.GetEntitiesLocations()
+            .Where(node => !node.Equals(startEntityLocation) && !node.Equals(endEntityLocation)).ToHashSet();
     }
 }

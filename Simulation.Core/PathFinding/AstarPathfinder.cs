@@ -40,7 +40,7 @@ public static class AstarPathfinder
                 return true;
             }
 
-            var neighbors = AStarPathFindingUtils.GetNeighbors
+            var neighbors = AStarPathFindingUtils.GetNeighborCells
                 (current, fieldSettings.GetFieldWidth(), fieldSettings.GetFieldHeight());
 
             foreach (var neighbor in neighbors)

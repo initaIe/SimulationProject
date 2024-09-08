@@ -52,7 +52,7 @@ var predatorSettings = new PredatorSettings(
 
 var entitiesSettings = new EntitiesSettings(staticObjectSettings, foodSettings, herbivoreSettings, predatorSettings);
 
-var sizeSettings = new SizeSettings(15,15);
+var sizeSettings = new SizeSettings(40,40);
 var displaySettings = new CellDisplaySettings("\ud83d\udfe9");
 
 var fieldSettings = new FieldSettings(sizeSettings, displaySettings);

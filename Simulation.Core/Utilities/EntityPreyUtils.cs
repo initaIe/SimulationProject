@@ -9,6 +9,7 @@ namespace Simulation.Core.Utilities;
 
 public static class EntityPreyUtils
 {
+    // TODO: NEED REFACTORING
     public static bool TryGetClosestPrey(
         IMap map,
         ICreature creature,
@@ -16,7 +17,6 @@ public static class EntityPreyUtils
         [MaybeNullWhen(false)] out IEntity closestPrey)
     {
         var creatureLocation = map.GetEntityLocation((IEntity)creature);
-        var barriers = EntityLocationUtils.GetBarrierLocations(map);
 
         var preys = GetPreysForCreature(map, creature.GetType(), simulationSettings.Entities);
 
@@ -28,7 +28,7 @@ public static class EntityPreyUtils
                     map,
                     creatureLocation,
                     map.GetEntityLocation(prey),
-                    barriers,
+                    EntityLocationUtils.GetLocationsOfBarriersExcludingEndpoints(map, (IEntity)creature, prey),
                     simulationSettings.Field,
                     out var cost) ? cost : (int?)null
             })

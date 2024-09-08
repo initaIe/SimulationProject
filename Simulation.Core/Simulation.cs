@@ -24,9 +24,9 @@ public class Simulation(
     public void Start()
     {
         CreateActions();
-        _initActions.ForEach(a => a.Perform(_map, _settings));
         while (true)
         {
+            _initActions.ForEach(a => a.Perform(_map, _settings));
             _turnActions.ForEach(a => a.Perform(_map, _settings));
             _fieldRender.Render(_settings.Field, ConsoleRenderUtils.GetRenderEntityData(_map));
             Thread.Sleep(250);

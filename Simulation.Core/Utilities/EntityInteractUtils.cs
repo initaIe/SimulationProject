@@ -6,15 +6,14 @@ namespace Simulation.Core.Utilities;
 
 public static class EntityInteractUtils
 {
-    public static bool IsCloseEnoughToInteract(IMap map, IEntity interacter, IEntity target,
-        FieldSettings fieldSettings)
+    public static bool CanInteract(IMap map, IEntity interacter, IEntity target, FieldSettings fieldSettings)
     {
         var interacterLocation = map.GetEntityLocation(interacter);
         var targetLocation = map.GetEntityLocation(target);
-        
-        var neighbors = AStarPathFindingUtils.GetNeighbors(interacterLocation, fieldSettings.GetFieldWidth(),
+
+        var neighborCells = AStarPathFindingUtils.GetNeighborCells(interacterLocation, fieldSettings.GetFieldWidth(),
             fieldSettings.GetFieldHeight());
 
-        return neighbors.Contains(targetLocation);
+        return neighborCells.Contains(targetLocation);
     }
 }

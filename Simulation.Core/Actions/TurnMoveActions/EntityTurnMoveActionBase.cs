@@ -11,9 +11,9 @@ public abstract class EntityTurnMoveActionBase<T> : IAction
 {
     public void Perform(IMap map, SimulationSettings simulationSettings)
     {
-        var entities = map.GetEntitesByType(typeof(T));
+        var entitiesByType = map.GetEntitesByType(typeof(T));
         
-        foreach (var entity in entities)
+        foreach (var entity in entitiesByType)
         {
             MakeTurnMove(map, entity, simulationSettings);
         }
@@ -27,11 +27,11 @@ public abstract class EntityTurnMoveActionBase<T> : IAction
     
         if (!EntityPreyUtils.TryGetClosestPrey(map, creature, simulationSettings, out var prey))
         {
-            PerformRandomMove(map, creature, simulationSettings);
+            EntityMoveUtils.RandomMoveCreature(map, creature, simulationSettings.Field);
             return;
         }
         
-        if (EntityInteractUtils.IsCloseEnoughToInteract(map, entity, prey, simulationSettings.Field))
+        if (EntityInteractUtils.CanInteract(map, entity, prey, simulationSettings.Field))
         {
             InteractWithPrey(map, creature, prey);
             return;
@@ -39,13 +39,8 @@ public abstract class EntityTurnMoveActionBase<T> : IAction
         
         if (!TryMoveToPrey(map, entity, prey, simulationSettings))
         {
-            PerformRandomMove(map, creature, simulationSettings);
+            EntityMoveUtils.RandomMoveCreature(map, creature, simulationSettings.Field);
         }
-    }
-    
-    private void PerformRandomMove(IMap map, ICreature creature, SimulationSettings settings)
-    {
-        EntityMoveUtils.RandomMoveCreature(map, creature, settings.Field);
     }
     
     private bool TryMoveToPrey(IMap map, IEntity entity, IEntity prey, SimulationSettings settings)
@@ -56,7 +51,7 @@ public abstract class EntityTurnMoveActionBase<T> : IAction
         var isPathExists = AstarPathfinder.TryFindPath(
             creatureLocation,
             preyLocation,
-            EntityLocationUtils.GetBarrierLocations(map),
+            EntityLocationUtils.GetLocationsOfBarriersExcludingEndpoints(map, entity, prey),
             settings.Field,
             out var path);
 

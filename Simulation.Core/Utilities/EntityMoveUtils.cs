@@ -18,7 +18,7 @@ public static class EntityMoveUtils
     public static void RandomMoveCreature(IMap map, ICreature creature, FieldSettings fieldSettings)
     {
         var creatureLocation = map.GetEntityLocation((IEntity)creature);
-        var neighbors = AStarPathFindingUtils.GetNeighbors(creatureLocation, fieldSettings.GetFieldWidth(),
+        var neighbors = AStarPathFindingUtils.GetNeighborCells(creatureLocation, fieldSettings.GetFieldWidth(),
             fieldSettings.GetFieldHeight());
         
         // TODO: проверять чтобы не пиздовал туда где есть объект, пока костыль

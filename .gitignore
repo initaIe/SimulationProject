@@ -370,3 +370,4 @@ SimulationProject.sln.DotSettings
 
 # Ignore foled with Rider settings
 .idea/
+.idea/.idea.SimulationProject/.idea

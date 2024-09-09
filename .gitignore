@@ -362,12 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Ignore file with user settings
-SimulationProject.sln.DotSettings.user
-
-# Ignore file with solution settings
-SimulationProject.sln.DotSettings
-
-# Ignore foled with Rider settings
+# Ignore folder with Rider settings
 .idea/
-.idea/.idea.SimulationProject/.idea
